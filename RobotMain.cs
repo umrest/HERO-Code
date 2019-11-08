@@ -10,10 +10,13 @@ namespace REST_2018_Robot
 {
     public class RobotMain
     {
+
+        //Robot startup
         public static void Main()
         {
             Robot robot = new Robot();
 
+            //Main run thread
             while (true)
             {
                 robot.Run();
