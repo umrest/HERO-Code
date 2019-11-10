@@ -6,19 +6,15 @@ using CTRE.Phoenix.Controller;
 using CTRE.Phoenix.MotorControl;
 using CTRE.Phoenix.MotorControl.CAN;
 
-namespace REST_2018_Robot
-{
-    public class RobotMain
-    {
+namespace HERO_Code_2019 {
+    public class RobotMain {
 
         //Robot startup
-        public static void Main()
-        {
+        public static void Main() {
             Robot robot = new Robot();
 
             //Main run thread
-            while (true)
-            {
+            while (true) {
                 robot.Run();
 
                 Utils.Delay(5);
