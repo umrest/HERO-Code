@@ -12,7 +12,7 @@ namespace HERO_Code_2019 {
         SerialCommsHandler NUC_SerialConnection;
 
         public Robot() {
-            NUC_SerialConnection = new SerialCommsHandler(SerialCommsHandler.Constants.Port.Port1, SerialCommsHandler.Constants.BAUD_RATE);
+            NUC_SerialConnection = new SerialCommsHandler(SerialCommsHandler.Constants.Port.Port1);
         }
 
         public void Run() {
