@@ -4,7 +4,7 @@ using Microsoft.SPOT;
 
 namespace HERO_Code_2019 {
 
-    class DecodeJoystick {
+    class JoystickDecoder {
 
         private bool button_a;
         private bool button_b;
@@ -55,7 +55,7 @@ namespace HERO_Code_2019 {
 
 
             //Debug Only
-            //printAllValues();
+            printAllValues();
         }
 
 

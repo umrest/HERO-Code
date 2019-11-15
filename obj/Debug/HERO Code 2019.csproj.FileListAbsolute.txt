@@ -1,13 +1,3 @@
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\le\REST 2018 Robot.exe
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\be\REST 2018 Robot.exe
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\le\REST 2018 Robot.pdb
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\be\REST 2018 Robot.pdb
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\REST 2018 Robot.exe
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\REST 2018 Robot.pdb
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\le\REST 2018 Robot.pe
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\le\REST 2018 Robot.pdbx
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\be\REST 2018 Robot.pe
-C:\VS_C++\REST\HERO Code 2019\bin\Debug\be\REST 2018 Robot.pdbx
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\LE\CTRE.pe
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\LE\ctre_netmf_native.pe
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\BE\CTRE.pe
@@ -20,10 +10,22 @@ C:\VS_C++\REST\HERO Code 2019\bin\Debug\CTRE.dll
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\ctre_netmf_native.dll
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\CTRE.pdb
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\ctre_netmf_native.pdb
-C:\VS_C++\REST\HERO Code 2019\obj\Debug\be\REST 2018 Robot.pe
-C:\VS_C++\REST\HERO Code 2019\obj\Debug\be\REST 2018 Robot.pdbx
-C:\VS_C++\REST\HERO Code 2019\obj\Debug\le\REST 2018 Robot.pe
-C:\VS_C++\REST\HERO Code 2019\obj\Debug\le\REST 2018 Robot.pdbx
 C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.csproj.CopyComplete
-C:\VS_C++\REST\HERO Code 2019\obj\Debug\REST 2018 Robot.exe
-C:\VS_C++\REST\HERO Code 2019\obj\Debug\REST 2018 Robot.pdb
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\le\HERO Code 2019.exe
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\be\HERO Code 2019.exe
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\le\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\be\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\HERO Code 2019.exe
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\le\HERO Code 2019.pe
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\le\HERO Code 2019.pdbx
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\be\HERO Code 2019.pe
+C:\VS_C++\REST\HERO Code 2019\bin\Debug\be\HERO Code 2019.pdbx
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.csprojAssemblyReference.cache
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\TinyCLR_DebugReferences.cache
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.exe
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\be\HERO Code 2019.pe
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\be\HERO Code 2019.pdbx
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\le\HERO Code 2019.pe
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\le\HERO Code 2019.pdbx

@@ -24,16 +24,24 @@ namespace HERO_Code_2019 {
 
 
             if (NUC_SerialConnection.isRobotEnabled()) {
-                
+
+                Debug.Print("ENABLED!!!");
+
                 //Heartbeat pulse to the motors to enable them
                 CTRE.Phoenix.Watchdog.Feed();
 
                 NUC_SerialConnection.UpdateJoystickValues(ref logitechController);
 
+                int yaw = NUC_SerialConnection.GetYaw();
+
+                logitechController.AXES.LEFT_Y = ((float)yaw) / 90.0;
+                logitechController.AXES.RIGHT_Y = -((float)yaw) / 90.0;
+                logitechController.BUTTONS.LB = true;
+
                 //MoveMotors
                 bool enabled = logitechController.BUTTONS.LB;
 
-                driveBase.Drive(ref logitechController, enabled);
+                //driveBase.Drive(ref logitechController, enabled);
             }
         }
 
@@ -41,6 +49,7 @@ namespace HERO_Code_2019 {
         Controller logitechController = new Controller();
 
         DriveBase driveBase = new DriveBase();
+
     }
 
     class Controller {

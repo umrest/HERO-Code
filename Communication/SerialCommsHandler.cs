@@ -8,8 +8,10 @@ namespace HERO_Code_2019 {
         System.IO.Ports.SerialPort NUC_serialPort;
 
         //Decoders
-        DecodeDashboardState dashboardDecoder;
-        DecodeJoystick joystickDecoder;
+        DashboardStateDecoder dashboardDecoder;
+        JoystickDecoder joystickDecoder;
+        VisionDecoder visionDecoder;
+
 
         //Serial comms constants
         public static class Constants {
@@ -43,8 +45,9 @@ namespace HERO_Code_2019 {
             NUC_serialPort.Open();
             NUC_serialPort.DiscardInBuffer();
 
-            dashboardDecoder = new DecodeDashboardState();
-            joystickDecoder = new DecodeJoystick();
+            dashboardDecoder = new DashboardStateDecoder();
+            joystickDecoder = new JoystickDecoder();
+            visionDecoder = new VisionDecoder();
         }
 
 
@@ -56,11 +59,25 @@ namespace HERO_Code_2019 {
             // (The buffer physically in the serial chip itself)
             Debug.Assert(Constants.PACKET_SIZE <= 256);
 
+
             //Incoming packet is read into this array
             byte[] in_bytes = new byte[Constants.PACKET_SIZE];
 
+
+            if (NUC_serialPort.BytesToRead > 250) {
+                Debug.Print("Buffer overflowing !!!!");
+                NUC_serialPort.DiscardInBuffer();
+                Debug.Assert(NUC_serialPort.BytesToRead < 250);
+            }
+
             //Wait for at least 12
-            if (NUC_serialPort.BytesToRead >= Constants.PACKET_SIZE) {
+            if (NUC_serialPort.BytesToRead >= Constants.PACKET_SIZE + 3) {
+
+                if ( (NUC_serialPort.ReadByte() != 44) || (NUC_serialPort.ReadByte() != 254) || (NUC_serialPort.ReadByte() != 153)) {
+                    NUC_serialPort.DiscardInBuffer();
+                    return;
+                }
+
 
                 //Read the next packet into an empty byte array
                 NUC_serialPort.Read(in_bytes, 0, Constants.PACKET_SIZE);
@@ -78,7 +95,7 @@ namespace HERO_Code_2019 {
 
                 } else if (type == Constants.PacketType.VISION) {
 
-
+                    visionDecoder.DecodeData(in_bytes);
 
                 } else Debug.Print("INVALID PACKET TYPE: " + type);
 
@@ -96,6 +113,10 @@ namespace HERO_Code_2019 {
         //Returns the robot enable status, decoded from the dashboard packet
         public bool isRobotEnabled() {
             return dashboardDecoder.IsEnabled;
+        }
+
+        public int GetYaw() {
+            return visionDecoder.GetYaw();
         }
     }
 }

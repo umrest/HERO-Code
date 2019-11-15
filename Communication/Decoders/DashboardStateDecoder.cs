@@ -2,7 +2,7 @@ using System;
 using Microsoft.SPOT;
 
 namespace HERO_Code_2019 {
-    class DecodeDashboardState {
+    class DashboardStateDecoder {
 
         private const byte ENABLE_KEY_START_VALUE = 20;
 
