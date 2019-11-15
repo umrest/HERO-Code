@@ -12,15 +12,20 @@ namespace HERO_Code_2019 {
         SerialCommsHandler NUC_SerialConnection;
 
         public Robot() {
+
+            //Initialize a serial connection with the Intel NUC
             NUC_SerialConnection = new SerialCommsHandler(SerialCommsHandler.Constants.Port.Port1);
         }
 
         public void Run() {
 
+            //Read incoming serial packets
             NUC_SerialConnection.ReadFromNUC();
+
 
             if (NUC_SerialConnection.isRobotEnabled()) {
                 
+                //Heartbeat pulse to the motors to enable them
                 CTRE.Phoenix.Watchdog.Feed();
 
                 NUC_SerialConnection.UpdateJoystickValues(ref logitechController);
