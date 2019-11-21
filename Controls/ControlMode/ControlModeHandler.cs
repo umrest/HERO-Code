@@ -39,6 +39,7 @@ namespace HERO_Code_2019 {
 
                 //Do nothing
                 case ControlMode.DISABLED:
+                    controller.ResetValues();
                     break;
 
                 //Invalid mode - print an error message
