@@ -11,6 +11,7 @@ namespace HERO_Code_2019 {
 
         SerialCommsHandler NUC_SerialConnection;
 
+
         public Robot() {
 
             //Initialize a serial connection with the Intel NUC
@@ -23,7 +24,10 @@ namespace HERO_Code_2019 {
             NUC_SerialConnection.ReadFromNUC();
 
 
-            if (NUC_SerialConnection.isRobotEnabled()) {
+            bool enabled = logitechController.BUTTONS.LB && NUC_SerialConnection.isRobotEnabled();
+
+
+            if (enabled) {
 
                 Debug.Print("ENABLED!!!");
 
@@ -39,9 +43,8 @@ namespace HERO_Code_2019 {
                 logitechController.BUTTONS.LB = true;
 
                 //MoveMotors
-                bool enabled = logitechController.BUTTONS.LB;
 
-                //driveBase.Drive(ref logitechController, enabled);
+                driveBase.Drive(ref logitechController, enabled);
             }
         }
 
