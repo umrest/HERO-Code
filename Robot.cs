@@ -9,13 +9,33 @@ using CTRE.Phoenix.MotorControl.CAN;
 namespace HERO_Code_2019 {
     class Robot {
 
+        //Create a serial connection with the NUC
         SerialCommsHandler NUC_SerialConnection;
+
+        //Initialize the handler for switching between different control modes (ie Teleop, Autonomous, Test, etc)
+        ControlModeHandler controlModeHandler;
+
+        //Initialize a logitech joystick object
+        Controller logitechController;
+
+        //Initialize the drive base motor controllers
+        DriveBase driveBase = new DriveBase();
+
 
 
         public Robot() {
 
             //Initialize a serial connection with the Intel NUC
             NUC_SerialConnection = new SerialCommsHandler(SerialCommsHandler.Constants.Port.Port1);
+
+            //Initialize the handler for switching between different control modes (ie Teleop, Autonomous, Test, etc)
+            controlModeHandler = new ControlModeHandler();
+
+            //Initialize a logitech joystick object
+            logitechController = new Controller();
+
+            //Initialize the drive base motor controllers
+            driveBase = new DriveBase();
         }
 
         public void Run() {
@@ -23,75 +43,39 @@ namespace HERO_Code_2019 {
             //Read incoming serial packets
             NUC_SerialConnection.ReadFromNUC();
 
+            //Check for dashboard enable signal in order for the robot to be enabled
+            bool ROBOT_ENABLED = NUC_SerialConnection.isRobotEnabled();
 
-            bool enabled = logitechController.BUTTONS.LB && NUC_SerialConnection.isRobotEnabled();
+            //Reset the robot control mode to disabled
+            controlModeHandler.SetMode(ControlModeHandler.ControlMode.DISABLED);
 
 
-            if (enabled) {
+            if (ROBOT_ENABLED) {
 
                 Debug.Print("ENABLED!!!");
 
                 //Heartbeat pulse to the motors to enable them
+                //Motor controllers will disable automatically if this is not regularly received
                 CTRE.Phoenix.Watchdog.Feed();
 
-                NUC_SerialConnection.UpdateJoystickValues(ref logitechController);
+                //Send signal to overwrite all motors to 0 if dead man's switch is not pressed
+                ROBOT_ENABLED = logitechController.BUTTONS.LB;
 
-                int yaw = NUC_SerialConnection.GetYaw();
+                //Update the robot control mode and send over the logitech controller object to be updated
+                if (ROBOT_ENABLED) {
+                    controlModeHandler.SetMode(ControlModeHandler.ControlMode.TEST);
+                    controlModeHandler.updateControllerValues(ref logitechController, ref NUC_SerialConnection);
+                }
 
-                logitechController.AXES.LEFT_Y = ((float)yaw) / 90.0;
-                logitechController.AXES.RIGHT_Y = -((float)yaw) / 90.0;
-                logitechController.BUTTONS.LB = true;
+
+
 
                 //MoveMotors
-
-                driveBase.Drive(ref logitechController, enabled);
+                driveBase.Drive(ref logitechController, ROBOT_ENABLED);
             }
         }
 
 
-        Controller logitechController = new Controller();
-
-        DriveBase driveBase = new DriveBase();
-
     }
 
-    class Controller {
-
-        public double ApplyDeadzones(double axis_in) {
-            if (axis_in <= DEADZONE || axis_in >= DEADZONE) return 0;
-            else return axis_in;
-        }
-
-        const double DEADZONE = .09;
-
-        public class Axes {
-            public double LEFT_Y = 0;
-            public double LEFT_X = 0;
-            public double RIGHT_Y = 0;
-            public double RIGHT_X = 0;
-
-            public double LT = 0;
-            public double RT = 0;
-        }
-
-
-        public class Buttons {
-            public bool A = false;
-            public bool B = false;
-            public bool X = false;
-            public bool Y = false;
-
-            public bool LB = false;
-            public bool RB = false;
-            public bool LT = false;
-            public bool RT = false;
-        }
-
-        //public int POV = -1;
-        //public int POV_UP = 1;
-        //public int POV_DOWN = 2;
-
-        public Buttons BUTTONS = new Buttons();
-        public Axes AXES = new Axes();
-    }
 }

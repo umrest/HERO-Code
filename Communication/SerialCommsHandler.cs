@@ -84,19 +84,24 @@ namespace HERO_Code_2019 {
 
                 //Access the packet type from the first byte, and send the byte aray to the appropriate decoder
                 byte type = in_bytes[0];
+
                 
+                //Enable or disable state of robot
                 if (type == Constants.PacketType.DASHBOARD_IN) {
 
                     dashboardDecoder.DecodeDashboardStateData(in_bytes);
 
+                //Joystick data for teleop mode
                 } else if (type == Constants.PacketType.JOYSTICK_TYPE) {
 
                     joystickDecoder.DecodeJoystickData(in_bytes);
 
+                //Vision data - orientation and location
                 } else if (type == Constants.PacketType.VISION) {
 
                     visionDecoder.DecodeData(in_bytes);
 
+                //Unknown packet ID
                 } else Debug.Print("INVALID PACKET TYPE: " + type);
 
 
@@ -115,8 +120,13 @@ namespace HERO_Code_2019 {
             return dashboardDecoder.IsEnabled;
         }
 
-        public int GetYaw() {
-            return visionDecoder.GetYaw();
+        //Returns Orientation and Location data structures from vision calculations
+        public VisionDecoder.Orientation GetVisionOrientation() {
+            return visionDecoder.GetOrientation();
+        }
+
+        public VisionDecoder.Location GetVisionLocation() {
+            return visionDecoder.GetLocation();
         }
     }
 }
