@@ -15,26 +15,36 @@ namespace HERO_Code_2019 {
         //Stores the current control mode of the rover
         private int mode;
 
+        private bool isRobotActive;
+
         public ControlModeHandler() {
             mode = ControlMode.DISABLED;
+            isRobotActive = false;
         }
 
         public void updateControllerValues(ref Controller controller, ref SerialCommsHandler serial) {
+            isRobotActive = false;
+
             switch (mode) {
 
                 //Use sensors and algorithms to apply values to the controller instead of a human operator
                 case ControlMode.AUTONOMOUS:
                     AutonomousMode(ref controller, ref serial);
+                    isRobotActive = true;
                     break;
 
                 //Read in the human-controlled joystick over the serial connection
                 case ControlMode.TELEOP:
                     TeleopMode(ref controller, ref serial);
+
+                    //Activate the robot in teleop mode if the dead man's switch is held
+                    isRobotActive = controller.BUTTONS.LB;
                     break;
 
                 //For testing new code/functions
                 case ControlMode.TEST:
                     TestMode(ref controller, ref serial);
+                    isRobotActive = true;
                     break;
 
                 //Do nothing
@@ -80,6 +90,11 @@ namespace HERO_Code_2019 {
 
         public void SetMode(int MODE) {
             this.mode = MODE;
+        }
+
+        //Returns if the robot is allowed to move, different from being disabled
+        public bool IsRobotActive() {
+            return isRobotActive;
         }
 
 

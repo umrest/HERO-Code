@@ -58,8 +58,7 @@ namespace HERO_Code_2019 {
                 //Motor controllers will disable automatically if this is not regularly received
                 CTRE.Phoenix.Watchdog.Feed();
 
-                //Send signal to overwrite all motors to 0 if dead man's switch is not pressed
-                ROBOT_ENABLED = logitechController.BUTTONS.LB;
+
 
                 //Update the robot control mode and send over the logitech controller object to be updated
                 if (ROBOT_ENABLED) {
@@ -71,7 +70,7 @@ namespace HERO_Code_2019 {
 
 
                 //MoveMotors
-                driveBase.Drive(ref logitechController, ROBOT_ENABLED);
+                driveBase.Drive(ref logitechController, controlModeHandler.IsRobotActive());
             }
         }
 
