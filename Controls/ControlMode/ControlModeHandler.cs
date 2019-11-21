@@ -82,8 +82,10 @@ namespace HERO_Code_2019 {
 
 
 
-        // ---------------------- Getters and Setters ----------------------
+        // ---------------------- Getters and Setters ---------------------- //
 
+
+        //Get and set the robot control mode
         public int GetMode() {
             return mode;
         }
