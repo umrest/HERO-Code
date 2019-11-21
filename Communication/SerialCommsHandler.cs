@@ -73,7 +73,14 @@ namespace HERO_Code_2019 {
             //Wait for at least 12
             if (NUC_serialPort.BytesToRead >= Constants.PACKET_SIZE + 3) {
 
-                if ( (NUC_serialPort.ReadByte() != 44) || (NUC_serialPort.ReadByte() != 254) || (NUC_serialPort.ReadByte() != 153)) {
+                
+                //Look for three-byte key at start of packet in order to prevent weird offsets
+                const byte KEY0 = 44;
+                const byte KEY1 = 254;
+                const byte KEY2 = 153;
+
+
+                if ((NUC_serialPort.ReadByte() != KEY0) || (NUC_serialPort.ReadByte() != KEY1) || (NUC_serialPort.ReadByte() != KEY2)) {
                     NUC_serialPort.DiscardInBuffer();
                     return;
                 }
@@ -85,26 +92,29 @@ namespace HERO_Code_2019 {
                 //Access the packet type from the first byte, and send the byte aray to the appropriate decoder
                 byte type = in_bytes[0];
 
-                
-                //Enable or disable state of robot
-                if (type == Constants.PacketType.DASHBOARD_IN) {
 
-                    dashboardDecoder.DecodeDashboardStateData(in_bytes);
+                switch (type) {
 
-                //Joystick data for teleop mode
-                } else if (type == Constants.PacketType.JOYSTICK_TYPE) {
+                    //Enable or disable state and control mode of robot
+                    case Constants.PacketType.DASHBOARD_IN:
+                        dashboardDecoder.DecodeDashboardStateData(in_bytes);
+                        break;
 
-                    joystickDecoder.DecodeJoystickData(in_bytes);
+                    //Joystick data for teleop mode
+                    case Constants.PacketType.JOYSTICK_TYPE:
+                        joystickDecoder.DecodeJoystickData(in_bytes);
+                        break;
 
-                //Vision data - orientation and location
-                } else if (type == Constants.PacketType.VISION) {
+                    //Vision data - orientation and location
+                    case Constants.PacketType.VISION:
+                        visionDecoder.DecodeData(in_bytes);
+                        break;
 
-                    visionDecoder.DecodeData(in_bytes);
-
-                //Unknown packet ID
-                } else Debug.Print("INVALID PACKET TYPE: " + type);
-
-
+                    //Error message for unknown packet type
+                    default:
+                        Debug.Print("ERROR - Unknown or invalid packet type: " + type);
+                        break;
+                }
             }
         }
 

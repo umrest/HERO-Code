@@ -5,7 +5,7 @@ namespace HERO_Code_2019 {
     class ControlModeHandler {
 
         public static class ControlMode {
-            public const int TEST = -1;
+            public const int TEST = 3;
 
             public const int DISABLED = 0;
             public const int TELEOP = 1;

@@ -103,8 +103,7 @@ namespace HERO_Code_2019 {
             controller.AXES.RIGHT_X = rj_x;
             controller.AXES.RIGHT_Y = rj_y;
 
-            //controller.AXES.LT = controller.GetAxis(4);
-            //controller.AXES.RT = controller.GetAxis(5);
+
 
             //BUTTONS 
             controller.BUTTONS.A = button_a;
@@ -114,8 +113,17 @@ namespace HERO_Code_2019 {
 
             controller.BUTTONS.LB = button_lb;
             controller.BUTTONS.RB = button_rb;
-            controller.BUTTONS.LT = controller.AXES.LT > 0;
-            controller.BUTTONS.RT = controller.AXES.RT > 0;
+
+            controller.BUTTONS.START = button_start;
+            controller.BUTTONS.SELECT = button_select;
+
+            controller.BUTTONS.LJ = button_lj;
+            controller.BUTTONS.RJ = button_rj;
+
+            //controller.AXES.LT = controller.GetAxis(4);
+            //controller.AXES.RT = controller.GetAxis(5);
+            //controller.BUTTONS.LT = controller.AXES.LT > 0;
+            //controller.BUTTONS.RT = controller.AXES.RT > 0;
         }
     }
 }
