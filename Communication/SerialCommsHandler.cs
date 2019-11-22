@@ -51,6 +51,8 @@ namespace HERO_Code_2019 {
         }
 
 
+        // ------------------- READING ------------------- //
+
         //Reads an incoming packet from the NUC into a byte array,
         //And sends it to the appropriate decoder based on the pack ID (the first byte)
         public void ReadFromNUC() {
@@ -137,6 +139,13 @@ namespace HERO_Code_2019 {
 
         public VisionDecoder.Location GetVisionLocation() {
             return visionDecoder.GetLocation();
+        }
+               
+
+        // ------------------- WRITING ------------------- //
+
+        public void WriteToNUC() {
+
         }
     }
 }

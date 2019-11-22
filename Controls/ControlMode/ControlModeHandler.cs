@@ -15,13 +15,16 @@ namespace HERO_Code_2019 {
         //Stores the current control mode of the rover
         private int mode;
 
+        //Equivalent to the dead man's switch
         private bool isRobotActive;
 
+        //Initalize the control mode to a safe, disabled state
         public ControlModeHandler() {
             mode = ControlMode.DISABLED;
             isRobotActive = false;
         }
 
+        //Applies different values to the controller object based on the current control mode
         public void updateControllerValues(ref Controller controller, ref SerialCommsHandler serial) {
             isRobotActive = false;
 
@@ -60,7 +63,11 @@ namespace HERO_Code_2019 {
             }
         }
 
+        //Autonomous blocks TODO
         private void AutonomousMode(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
+            
+
+
 
         }
 
