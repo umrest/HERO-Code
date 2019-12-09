@@ -1,5 +1,7 @@
 using System;
 using Microsoft.SPOT;
+using System.Collections;
+
 
 using CTRE.Phoenix.MotorControl;
 using CTRE.Phoenix.MotorControl.CAN;
@@ -24,13 +26,26 @@ namespace HERO_Code_2019 {
         public DriveBase(short mode = TANK) {
             MODE = mode;
 
-            const int MAX_CURRENT = 10;
-            const int TIMEOUT_MS = 150;
+            const int MAX_CURRENT = 5;
 
-            FrontLeft.ConfigContinuousCurrentLimit(MAX_CURRENT, TIMEOUT_MS);
-            FrontRight.ConfigContinuousCurrentLimit(MAX_CURRENT, TIMEOUT_MS);
-            BackLeft.ConfigContinuousCurrentLimit(MAX_CURRENT, TIMEOUT_MS);
-            BackRight.ConfigContinuousCurrentLimit(MAX_CURRENT, TIMEOUT_MS);
+            FrontLeft.ConfigContinuousCurrentLimit(MAX_CURRENT);
+            FrontRight.ConfigContinuousCurrentLimit(MAX_CURRENT);
+            BackLeft.ConfigContinuousCurrentLimit(MAX_CURRENT);
+            BackRight.ConfigContinuousCurrentLimit(MAX_CURRENT);
+
+            FrontLeft.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
+            FrontLeft.ConfigPeakCurrentDuration(0);
+
+            FrontRight.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
+            FrontRight.ConfigPeakCurrentDuration(0);
+
+            BackLeft.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
+            BackLeft.ConfigPeakCurrentDuration(0);
+
+            BackRight.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
+            BackRight.ConfigPeakCurrentDuration(0);
+
+
 
             FrontRight.SetInverted(true);
             BackRight.SetInverted(true);
@@ -39,7 +54,9 @@ namespace HERO_Code_2019 {
 
         //Main drive function, called from the robot class
         public void Drive(ref Controller controller, bool enabled) {
-            Debug.Print("Front Right: " + FrontRight.GetOutputCurrent().ToString());
+            //Debug.Print("Pos: " + FrontLeft.GetSelectedSensorPosition().ToString()
+            //    + "Velocity: " + FrontLeft.GetSelectedSensorVelocity()
+            //    + "Current: " + FrontLeft.GetOutputCurrent().ToString());
 
 
             if (enabled && MODE == TANK) {
@@ -70,6 +87,43 @@ namespace HERO_Code_2019 {
             FrontRight.Set(ControlMode.PercentOutput, R_Speed);
             BackLeft.Set(ControlMode.PercentOutput, L_Speed);
             BackRight.Set(ControlMode.PercentOutput, R_Speed);
+        }
+
+        public ArrayList GetTalonInfo() {
+            ArrayList talonInfoList = new ArrayList();
+
+            TalonSRX t; 
+            TalonInfo info = new TalonInfo();
+
+            t = FrontLeft;
+            info.CAN_ID = (short) t.GetDeviceID();
+            info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
+            info.encoderPosition = (short) t.GetSelectedSensorPosition();
+            info.encoderVelocity = (short) t.GetSelectedSensorVelocity();
+            talonInfoList.Add(new TalonInfo(info));
+
+            t = FrontRight;
+            info.CAN_ID = (short)t.GetDeviceID();
+            info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
+            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
+            talonInfoList.Add(new TalonInfo(info));
+
+            t = BackLeft;
+            info.CAN_ID = (short)t.GetDeviceID();
+            info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
+            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
+            talonInfoList.Add(new TalonInfo(info));
+
+            t = BackRight;
+            info.CAN_ID = (short)t.GetDeviceID();
+            info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
+            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
+            talonInfoList.Add(new TalonInfo(info));
+
+            return talonInfoList;
         }
 
     }

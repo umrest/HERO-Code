@@ -35,8 +35,10 @@
   <ItemGroup>
     <Compile Include="Communication\Decoders\VisionDecoder.cs" />
     <Compile Include="Communication\SerialCommsHandler.cs" />
+    <Compile Include="Controls\ControlMode\HopperLineup.cs" />
     <Compile Include="Controls\LogitechController.cs" />
     <Compile Include="Controls\ControlMode\ControlModeHandler.cs" />
+    <Compile Include="Controls\TalonInfo.cs" />
     <Compile Include="Controls\MotorSet.cs" />
     <Compile Include="Utils\BitArray8.cs" />
     <Compile Include="Controls\DriveBase.cs" />

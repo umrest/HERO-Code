@@ -65,25 +65,17 @@ namespace HERO_Code_2019 {
 
         //Autonomous blocks TODO
         private void AutonomousMode(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
-            
-
-
-
+            HopperLineup.DistanceLoop(ref logitechController, ref NUC_SerialConnection);
         }
 
         //Update logitechController values with those sent wirelessly from the driver station
         private void TeleopMode(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
-
             NUC_SerialConnection.UpdateJoystickValues(ref logitechController);
         }
 
         //For running test code, testing new functions
         private void TestMode(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
-            int yaw = NUC_SerialConnection.GetVisionOrientation().yaw;
-
-            logitechController.AXES.LEFT_Y = ((float)yaw) / 90.0;
-            logitechController.AXES.RIGHT_Y = -((float)yaw) / 90.0;
-            logitechController.BUTTONS.LB = true;
+            HopperLineup.TurnLoop(ref logitechController, ref NUC_SerialConnection);
         }
 
 

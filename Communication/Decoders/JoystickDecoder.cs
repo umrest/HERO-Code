@@ -43,11 +43,17 @@ namespace HERO_Code_2019 {
             button_select = button_array1.GetBit(6);
             button_start = button_array1.GetBit(7);
 
-            button_lj = button_array2.GetBit(6);
-            button_rj = button_array2.GetBit(7);
+            button_lj = button_array2.GetBit(0);
+            button_rj = button_array2.GetBit(1);
 
             //Read joystick axes
             //Invert the y axes so that positive values are up on the joystick
+
+
+            //            lj_x = TypeConverter.Remap( (short) data[3]) - middle, 1.0f);
+
+
+
             lj_x = byteToFloat(data[3]);
             lj_y = -byteToFloat(data[4]);
             rj_x = byteToFloat(data[5]);
@@ -55,7 +61,7 @@ namespace HERO_Code_2019 {
 
 
             //Debug Only
-            printAllValues();
+           // printAllValues();
         }
 
 

@@ -3,7 +3,7 @@ using Microsoft.SPOT;
 using System.Collections;
 
 namespace HERO_Code_2019 {
-    abstract class MotorSet {
+    class MotorSet {
 
         public class TalonInfo {
             public TalonInfo(short CAN_ID, float currentDraw, long encoderValue) {
@@ -11,6 +11,7 @@ namespace HERO_Code_2019 {
                 this.currentDraw = currentDraw;
                 this.encoderValue = encoderValue;
             }
+
 
             public short CAN_ID;
             public float currentDraw;
@@ -21,10 +22,14 @@ namespace HERO_Code_2019 {
         private ArrayList list;
 
         public MotorSet() {
-            //list.Add(new TalonInfo(1,2.0,3));
+
+            list = new ArrayList();
+
+
+            list.Add(new TalonInfo(1, 2.0f, 3));
+
         }
 
-        public abstract 
-
+        
     }
 }

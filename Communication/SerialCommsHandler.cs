@@ -1,5 +1,7 @@
 using System;
 using Microsoft.SPOT;
+using System.Collections;
+
 
 namespace HERO_Code_2019 {
     class SerialCommsHandler {
@@ -11,6 +13,12 @@ namespace HERO_Code_2019 {
         DashboardStateDecoder dashboardDecoder;
         JoystickDecoder joystickDecoder;
         VisionDecoder visionDecoder;
+
+
+        //Look for three-byte key at start of packet in order to prevent weird offsets
+        const byte KEY0 = 44;
+        const byte KEY1 = 254;
+        const byte KEY2 = 153;
 
 
         //Serial comms constants
@@ -75,14 +83,11 @@ namespace HERO_Code_2019 {
             //Wait for at least 12
             if (NUC_serialPort.BytesToRead >= Constants.PACKET_SIZE + 3) {
 
-                
-                //Look for three-byte key at start of packet in order to prevent weird offsets
-                const byte KEY0 = 44;
-                const byte KEY1 = 254;
-                const byte KEY2 = 153;
+
 
 
                 if ((NUC_serialPort.ReadByte() != KEY0) || (NUC_serialPort.ReadByte() != KEY1) || (NUC_serialPort.ReadByte() != KEY2)) {
+                    Debug.Print("Invalid three byte key!!!");
                     NUC_serialPort.DiscardInBuffer();
                     return;
                 }
@@ -128,8 +133,13 @@ namespace HERO_Code_2019 {
 
 
         //Returns the robot enable status, decoded from the dashboard packet
-        public bool isRobotEnabled() {
-            return dashboardDecoder.IsEnabled;
+        public bool IsRobotEnabled() {
+            return dashboardDecoder.IsEnabled();
+        }
+
+        //Return the control mode of the robot
+        public short GetControlMode() {
+            return dashboardDecoder.GetControlMode();
         }
 
         //Returns Orientation and Location data structures from vision calculations
@@ -140,11 +150,25 @@ namespace HERO_Code_2019 {
         public VisionDecoder.Location GetVisionLocation() {
             return visionDecoder.GetLocation();
         }
-               
+
 
         // ------------------- WRITING ------------------- //
 
-        public void WriteToNUC() {
+        public void WriteToNUC(ref ArrayList talonInfoList) {
+
+            NUC_serialPort.WriteByte(KEY0);
+            NUC_serialPort.WriteByte(KEY1);
+            NUC_serialPort.WriteByte(KEY2);
+
+
+            NUC_serialPort.WriteByte(Constants.PacketType.DASHBOARD_OUT);
+
+            foreach (Object o in talonInfoList) {
+                TalonInfo talonInfo = (TalonInfo)o;
+
+                NUC_serialPort.Write(talonInfo.GetDataAsByteArray(), 0, TalonInfo.NUM_BYTES);
+            }
+
 
         }
     }

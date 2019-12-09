@@ -31,15 +31,19 @@ namespace HERO_Code_2019 {
             }
 
             //Read in the robot control state byte
-            controlMode = data[KEY_LENGTH];
+            controlMode = data[KEY_LENGTH + 1];
 
-
+            Debug.Print(controlMode.ToString());
 
         }
 
         //Returns robot enabled status
-        public bool IsEnabled {
-            get { return enabled; }
+        public bool IsEnabled() {
+            return enabled;
+        }
+
+        public short GetControlMode() {
+            return controlMode;
         }
     }
 }
