@@ -26,7 +26,7 @@ namespace HERO_Code_2019 {
 
         //TESTTEST
         static TalonSRX pigonTalon = new TalonSRX(9);
-        static PigeonIMU gyro = new PigeonIMU(pigonTalon);
+        //static PigeonIMU gyro = new PigeonIMU(pigonTalon);
 
         public Robot() {
 
@@ -82,11 +82,14 @@ namespace HERO_Code_2019 {
             }
 
             //Serial write to Dashboard with talon motor data
-            //packageTalonInfo();
+            packageTalonInfo();
+
         }
 
-
+        byte cntr = 0;
         private void packageTalonInfo() {
+            if ((cntr++) % 100 != 0) return;
+
             ArrayList talonInfoList = new ArrayList();
 
             foreach (TalonInfo info in driveBase.GetTalonInfo()) talonInfoList.Add(info);

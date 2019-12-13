@@ -65,7 +65,7 @@ namespace HERO_Code_2019 {
 
         //Autonomous blocks TODO
         private void AutonomousMode(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
-            HopperLineup.DistanceLoop(ref logitechController, ref NUC_SerialConnection);
+            HopperLineup.HopperLineupLoop(ref logitechController, ref NUC_SerialConnection);
         }
 
         //Update logitechController values with those sent wirelessly from the driver station
@@ -75,7 +75,7 @@ namespace HERO_Code_2019 {
 
         //For running test code, testing new functions
         private void TestMode(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
-            HopperLineup.TurnLoop(ref logitechController, ref NUC_SerialConnection);
+            HopperLineup.HorizontalDisplacementLoop(ref logitechController, ref NUC_SerialConnection);
         }
 
 

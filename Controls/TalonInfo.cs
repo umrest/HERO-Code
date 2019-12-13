@@ -34,6 +34,7 @@ namespace HERO_Code_2019 {
 
         public short CAN_ID;
         public short currentDraw;
+        public byte percentOutput;
         public long encoderPosition;
         public int encoderVelocity;
 
@@ -44,18 +45,35 @@ namespace HERO_Code_2019 {
             return (short)(currentDraw * 100);
         }
 
+        public static byte ConvertPercentOutputToByte(int percentOutput) {
+
+            int midpoint = byte.MaxValue / 2;
+            
+            if (percentOutput >= -100 && percentOutput <= 100) {
+                percentOutput += midpoint;
+                return (byte) percentOutput;
+            }
+
+
+            Debug.Print("ERROR - Percent Output outside of expected range! (Convert Percent Output To Byte");
+
+            return 0;
+        }
+
 
         public byte[] GetDataAsByteArray() {
 
             byte[] byteArray = new byte[NUM_BYTES];
             byte[] tempArray = new byte[8];
 
-            byteArray[0] = (byte)CAN_ID;
+            byteArray[0] = (byte) CAN_ID;
 
 
             tempArray = TypeConverter.ToByteArray(currentDraw);
             byteArray[1] = tempArray[0];
             byteArray[2] = tempArray[1];
+
+            //tempArray[3] = percentOutput;
 
             tempArray = TypeConverter.ToByteArray(encoderPosition);
             byteArray[3] = tempArray[0];

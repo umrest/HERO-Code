@@ -100,6 +100,7 @@ namespace HERO_Code_2019 {
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
             info.encoderPosition = (short) t.GetSelectedSensorPosition();
             info.encoderVelocity = (short) t.GetSelectedSensorVelocity();
+            
             talonInfoList.Add(new TalonInfo(info));
 
             t = FrontRight;

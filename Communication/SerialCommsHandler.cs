@@ -160,14 +160,26 @@ namespace HERO_Code_2019 {
             NUC_serialPort.WriteByte(KEY1);
             NUC_serialPort.WriteByte(KEY2);
 
+            byte[] packet = new byte[Constants.PACKET_SIZE];
+
 
             NUC_serialPort.WriteByte(Constants.PacketType.DASHBOARD_OUT);
 
+
+            int idx = 0;
             foreach (Object o in talonInfoList) {
+
+
                 TalonInfo talonInfo = (TalonInfo)o;
 
-                NUC_serialPort.Write(talonInfo.GetDataAsByteArray(), 0, TalonInfo.NUM_BYTES);
+                talonInfo.GetDataAsByteArray().CopyTo(packet, TalonInfo.NUM_BYTES * idx);
+
+                //packet.CopyTo()
+
+                idx++;
             }
+
+            NUC_serialPort.Write(packet, 0, Constants.PACKET_SIZE);
 
 
         }
