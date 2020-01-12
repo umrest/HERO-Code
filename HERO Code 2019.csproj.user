@@ -4,4 +4,7 @@
     <DeployDevice>Mini-USB</DeployDevice>
     <DeployTransport>USB</DeployTransport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DeployDevice>Mini-USB</DeployDevice>
+  </PropertyGroup>
 </Project>

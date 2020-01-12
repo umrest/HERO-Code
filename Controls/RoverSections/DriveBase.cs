@@ -12,8 +12,8 @@ namespace HERO_Code_2019 {
     class DriveBase {
         private TalonSRX FrontLeft = new TalonSRX(1);
         private TalonSRX FrontRight = new TalonSRX(2);
-        private TalonSRX BackLeft = new TalonSRX(8);
-        private TalonSRX BackRight = new TalonSRX(7);
+        private TalonSRX BackLeft = new TalonSRX(3);
+        private TalonSRX BackRight = new TalonSRX(4);
 
         private const short ARCADE = 1;
         private const short TANK = 2;
@@ -53,7 +53,7 @@ namespace HERO_Code_2019 {
         }
 
         //Main drive function, called from the robot class
-        public void Drive(ref Controller controller, bool enabled) {
+        public void Update(ref Controller controller, bool enabled) {
             //Debug.Print("Pos: " + FrontLeft.GetSelectedSensorPosition().ToString()
             //    + "Velocity: " + FrontLeft.GetSelectedSensorVelocity()
             //    + "Current: " + FrontLeft.GetOutputCurrent().ToString());
@@ -97,6 +97,7 @@ namespace HERO_Code_2019 {
 
             t = FrontLeft;
             info.CAN_ID = (short) t.GetDeviceID();
+            info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
             info.encoderPosition = (short) t.GetSelectedSensorPosition();
             info.encoderVelocity = (short) t.GetSelectedSensorVelocity();
@@ -105,6 +106,7 @@ namespace HERO_Code_2019 {
 
             t = FrontRight;
             info.CAN_ID = (short)t.GetDeviceID();
+            info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
             info.encoderPosition = (short)t.GetSelectedSensorPosition();
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
@@ -112,6 +114,7 @@ namespace HERO_Code_2019 {
 
             t = BackLeft;
             info.CAN_ID = (short)t.GetDeviceID();
+            info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
             info.encoderPosition = (short)t.GetSelectedSensorPosition();
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
@@ -119,6 +122,7 @@ namespace HERO_Code_2019 {
 
             t = BackRight;
             info.CAN_ID = (short)t.GetDeviceID();
+            info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
             info.encoderPosition = (short)t.GetSelectedSensorPosition();
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();

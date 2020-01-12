@@ -35,14 +35,16 @@
   <ItemGroup>
     <Compile Include="Communication\Decoders\VisionDecoder.cs" />
     <Compile Include="Communication\SerialCommsHandler.cs" />
+    <Compile Include="Components\LightSensor.cs" />
     <Compile Include="Controls\ControlMode\ControlAlgorithms.cs" />
     <Compile Include="Controls\ControlMode\HopperLineup.cs" />
     <Compile Include="Controls\LogitechController.cs" />
     <Compile Include="Controls\ControlMode\ControlModeHandler.cs" />
+    <Compile Include="Controls\RoverSections\Excavation.cs" />
     <Compile Include="Controls\TalonInfo.cs" />
     <Compile Include="Controls\MotorSet.cs" />
     <Compile Include="Utils\BitArray8.cs" />
-    <Compile Include="Controls\DriveBase.cs" />
+    <Compile Include="Controls\RoverSections\DriveBase.cs" />
     <Compile Include="Communication\Decoders\DashboardStateDecoder.cs" />
     <Compile Include="Communication\Decoders\JoystickDecoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

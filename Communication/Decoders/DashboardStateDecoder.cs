@@ -33,7 +33,7 @@ namespace HERO_Code_2019 {
             //Read in the robot control state byte
             controlMode = data[KEY_LENGTH + 1];
 
-            Debug.Print(controlMode.ToString());
+            //Debug.Print(controlMode.ToString());
 
         }
 

@@ -1,0 +1,31 @@
+C:\VS_C++\REST\HERO Code 2019\bin\Release\le\HERO Code 2019.exe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\be\HERO Code 2019.exe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\le\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\bin\Release\be\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\bin\Release\HERO Code 2019.exe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\bin\Release\le\HERO Code 2019.pe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\le\HERO Code 2019.pdbx
+C:\VS_C++\REST\HERO Code 2019\bin\Release\be\HERO Code 2019.pe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\be\HERO Code 2019.pdbx
+C:\VS_C++\REST\HERO Code 2019\bin\Release\LE\CTRE.pe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\LE\ctre_netmf_native.pe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\BE\CTRE.pe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\BE\ctre_netmf_native.pe
+C:\VS_C++\REST\HERO Code 2019\bin\Release\LE\CTRE.pdbx
+C:\VS_C++\REST\HERO Code 2019\bin\Release\LE\ctre_netmf_native.pdbx
+C:\VS_C++\REST\HERO Code 2019\bin\Release\BE\CTRE.pdbx
+C:\VS_C++\REST\HERO Code 2019\bin\Release\BE\ctre_netmf_native.pdbx
+C:\VS_C++\REST\HERO Code 2019\bin\Release\CTRE.dll
+C:\VS_C++\REST\HERO Code 2019\bin\Release\ctre_netmf_native.dll
+C:\VS_C++\REST\HERO Code 2019\bin\Release\CTRE.pdb
+C:\VS_C++\REST\HERO Code 2019\bin\Release\ctre_netmf_native.pdb
+C:\VS_C++\REST\HERO Code 2019\obj\Release\be\HERO Code 2019.pe
+C:\VS_C++\REST\HERO Code 2019\obj\Release\be\HERO Code 2019.pdbx
+C:\VS_C++\REST\HERO Code 2019\obj\Release\le\HERO Code 2019.pe
+C:\VS_C++\REST\HERO Code 2019\obj\Release\le\HERO Code 2019.pdbx
+C:\VS_C++\REST\HERO Code 2019\obj\Release\HERO Code 2019.csproj.CopyComplete
+C:\VS_C++\REST\HERO Code 2019\obj\Release\HERO Code 2019.exe
+C:\VS_C++\REST\HERO Code 2019\obj\Release\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\obj\Release\HERO Code 2019.csprojAssemblyReference.cache
+C:\VS_C++\REST\HERO Code 2019\obj\Release\TinyCLR_DebugReferences.cache

@@ -9,7 +9,7 @@ namespace HERO_Code_2019 {
         public static float TurnLoop(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
             float yaw = NUC_SerialConnection.GetVisionOrientation().yaw;
 
-            float driveSpeed = Controls.ControlAlgorithms.P_Loop(yaw, 90.0f, 0);
+            float driveSpeed = Controls.ControlAlgorithms.P_Loop(yaw, 15.0f, 0);
 
             logitechController.AXES.LEFT_Y = -driveSpeed;
             logitechController.AXES.RIGHT_Y = driveSpeed;
@@ -26,7 +26,7 @@ namespace HERO_Code_2019 {
             logitechController.AXES.LEFT_Y = driveSpeed;
             logitechController.AXES.RIGHT_Y = driveSpeed;
 
-            Debug.Print(driveSpeed.ToString());
+            //Debug.Print(driveSpeed.ToString());
 
             return driveSpeed;
         }
@@ -35,7 +35,7 @@ namespace HERO_Code_2019 {
             float dist = NUC_SerialConnection.GetVisionLocation().x;
 
 
-            float driveSpeed = Controls.ControlAlgorithms.P_Loop(dist, 30.0f);
+            float driveSpeed = Controls.ControlAlgorithms.P_Loop(dist, 10.0f);
 
             logitechController.AXES.LEFT_Y = driveSpeed;
             logitechController.AXES.RIGHT_Y = driveSpeed;
@@ -53,8 +53,10 @@ namespace HERO_Code_2019 {
 
 
 
-            logitechController.AXES.LEFT_Y = TypeConverter.Constrain(driveSpeed - turnVal + horizontalVal, 0.1f, 1);
-            logitechController.AXES.RIGHT_Y = TypeConverter.Constrain(driveSpeed + turnVal - horizontalVal, 0.1f, 1);
+            logitechController.AXES.LEFT_Y = TypeConverter.Constrain(driveSpeed - turnVal + horizontalVal, -0.1f, 1);
+            logitechController.AXES.RIGHT_Y = TypeConverter.Constrain(driveSpeed + turnVal - horizontalVal, -0.1f, 1);
+
+            Debug.Print(logitechController.AXES.LEFT_Y.ToString() + ", " + logitechController.AXES.RIGHT_Y.ToString());
 
         }
 

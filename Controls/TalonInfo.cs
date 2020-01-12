@@ -9,21 +9,23 @@ namespace HERO_Code_2019 {
             this.currentDraw = info.currentDraw;
             this.encoderPosition = info.encoderPosition;
             this.encoderVelocity = info.encoderVelocity;
+            this.percentOutput = info.percentOutput;
         }
 
-        public TalonInfo(short CAN_ID, short currentDraw, long encoderPosition, int encoderVelocity) {
+        public TalonInfo(short CAN_ID, short percentOutput, short currentDraw, long encoderPosition, int encoderVelocity) {
             this.CAN_ID = CAN_ID;
             this.currentDraw = currentDraw;
             this.encoderPosition = encoderPosition;
             this.encoderVelocity = encoderVelocity;
-
+            this.percentOutput = ConvertPercentOutputToByte(percentOutput);
         }
 
-        public TalonInfo(short CAN_ID, float currentDraw, long encoderPosition, int encoderVelocity) {
+        public TalonInfo(short CAN_ID, short percentOutput, float currentDraw, long encoderPosition, int encoderVelocity) {
             this.CAN_ID = CAN_ID;
             this.currentDraw = ConvertCurrentToShort(currentDraw);
             this.encoderPosition = encoderPosition;
             this.encoderVelocity = encoderVelocity;
+            this.percentOutput = ConvertPercentOutputToByte(percentOutput);
 
         }
 
@@ -38,7 +40,7 @@ namespace HERO_Code_2019 {
         public long encoderPosition;
         public int encoderVelocity;
 
-        public const int NUM_BYTES = 15;
+        public const int NUM_BYTES = 16;
 
 
         public static short ConvertCurrentToShort(float currentDraw) {
@@ -73,8 +75,6 @@ namespace HERO_Code_2019 {
             byteArray[1] = tempArray[0];
             byteArray[2] = tempArray[1];
 
-            //tempArray[3] = percentOutput;
-
             tempArray = TypeConverter.ToByteArray(encoderPosition);
             byteArray[3] = tempArray[0];
             byteArray[4] = tempArray[1];
@@ -92,6 +92,7 @@ namespace HERO_Code_2019 {
             byteArray[13] = tempArray[2];
             byteArray[14] = tempArray[3];
 
+            byteArray[15] = percentOutput;
 
             return byteArray;
         }

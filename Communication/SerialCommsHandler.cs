@@ -24,7 +24,9 @@ namespace HERO_Code_2019 {
         //Serial comms constants
         public static class Constants {
 
-            public const int PACKET_SIZE = 128;
+            public const int PACKET_SIZE_READ = 128;
+            public const int PACKET_SIZE_WRITE = 230;
+
             public const int BAUD_RATE = 115200;
 
             //Packet type encoding/key in the first byte of an incoming packet
@@ -67,11 +69,11 @@ namespace HERO_Code_2019 {
 
             //Assert that the packet size is less than the size of the serial buffer
             // (The buffer physically in the serial chip itself)
-            Debug.Assert(Constants.PACKET_SIZE <= 256);
+            Debug.Assert(Constants.PACKET_SIZE_READ <= 256);
 
 
             //Incoming packet is read into this array
-            byte[] in_bytes = new byte[Constants.PACKET_SIZE];
+            byte[] in_bytes = new byte[Constants.PACKET_SIZE_READ];
 
 
             if (NUC_serialPort.BytesToRead > 250) {
@@ -81,7 +83,7 @@ namespace HERO_Code_2019 {
             }
 
             //Wait for at least 12
-            if (NUC_serialPort.BytesToRead >= Constants.PACKET_SIZE + 3) {
+            if (NUC_serialPort.BytesToRead >= Constants.PACKET_SIZE_READ + 3) {
 
 
 
@@ -94,7 +96,7 @@ namespace HERO_Code_2019 {
 
 
                 //Read the next packet into an empty byte array
-                NUC_serialPort.Read(in_bytes, 0, Constants.PACKET_SIZE);
+                NUC_serialPort.Read(in_bytes, 0, Constants.PACKET_SIZE_READ);
 
                 //Access the packet type from the first byte, and send the byte aray to the appropriate decoder
                 byte type = in_bytes[0];
@@ -160,7 +162,7 @@ namespace HERO_Code_2019 {
             NUC_serialPort.WriteByte(KEY1);
             NUC_serialPort.WriteByte(KEY2);
 
-            byte[] packet = new byte[Constants.PACKET_SIZE];
+            byte[] packet = new byte[Constants.PACKET_SIZE_WRITE];
 
 
             NUC_serialPort.WriteByte(Constants.PacketType.DASHBOARD_OUT);
@@ -174,12 +176,10 @@ namespace HERO_Code_2019 {
 
                 talonInfo.GetDataAsByteArray().CopyTo(packet, TalonInfo.NUM_BYTES * idx);
 
-                //packet.CopyTo()
-
                 idx++;
             }
 
-            NUC_serialPort.Write(packet, 0, Constants.PACKET_SIZE);
+            NUC_serialPort.Write(packet, 0, Constants.PACKET_SIZE_WRITE);
 
 
         }

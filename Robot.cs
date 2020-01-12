@@ -10,6 +10,8 @@ using CTRE.Phoenix.Sensors;
 namespace HERO_Code_2019 {
     class Robot {
 
+        public const bool CAN_NETWORK_IS_ENABLED = true;
+
         public const int BATTERY_VOLTAGE = 24;
 
         //Create a serial connection with the NUC
@@ -24,8 +26,11 @@ namespace HERO_Code_2019 {
         //Initialize the drive base motor controllers
         DriveBase driveBase = new DriveBase();
 
+        //Initialize the Excavator motor controllers
+        Excavation excavation = new Excavation();
+
         //TESTTEST
-        static TalonSRX pigonTalon = new TalonSRX(9);
+        //4static TalonSRX pigonTalon = new TalonSRX(9);
         //static PigeonIMU gyro = new PigeonIMU(pigonTalon);
 
         public Robot() {
@@ -58,7 +63,7 @@ namespace HERO_Code_2019 {
             controlModeHandler.SetMode(ControlModeHandler.ControlMode.DISABLED);
 
 
-
+            //Debug.Print("TRUE");
 
             if (ROBOT_ENABLED) {
 
@@ -74,15 +79,15 @@ namespace HERO_Code_2019 {
                     controlModeHandler.updateControllerValues(ref logitechController, ref NUC_SerialConnection);
                 }
 
-
-
-
                 //MoveMotors
-                driveBase.Drive(ref logitechController, controlModeHandler.IsRobotActive());
+                if (CAN_NETWORK_IS_ENABLED) {
+                    driveBase.Update(ref logitechController, controlModeHandler.IsRobotActive());
+                    excavation.Update(ref logitechController, controlModeHandler.IsRobotActive());
+                }
             }
 
             //Serial write to Dashboard with talon motor data
-            packageTalonInfo();
+            if (CAN_NETWORK_IS_ENABLED) packageTalonInfo();
 
         }
 
@@ -93,6 +98,7 @@ namespace HERO_Code_2019 {
             ArrayList talonInfoList = new ArrayList();
 
             foreach (TalonInfo info in driveBase.GetTalonInfo()) talonInfoList.Add(info);
+            foreach (TalonInfo info in excavation.GetTalonInfo()) talonInfoList.Add(info);
 
             NUC_SerialConnection.WriteToNUC(ref talonInfoList);
         }
