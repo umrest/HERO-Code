@@ -12,11 +12,12 @@ namespace HERO_Code_2019 {
 
     class Excavation {
 
-        private static int ACTUATOR_STOWED_POSITION = 350;
-        private static int ACTUATOR_RAISED_POSITION = 700;
+        private static int ACTUATOR_STOWED_POSITION = 270;
+        private static int ACTUATOR_RAISED_POSITION = 755;
 
-        private TalonSRX LeftActuator = new TalonSRX(11);
-        private TalonSRX RightActuator = new TalonSRX(12);
+
+        private TalonSRX leftActuator;
+        private TalonSRX rightActuator;
 
         private LightSensor lightSensor = new LightSensor(CTRE.HERO.IO.Port8.Analog_Pin5);
 
@@ -25,9 +26,12 @@ namespace HERO_Code_2019 {
         //private TalonSRX RightAugerExtender = new TalonSRX(15);
 
 
+
+        //Definitions for Excavation State Machine
         ExcavationState excavationState;
 
         private enum ExcavationState {
+            INIT,
             STOWED,
             STOWING,
             RAISED,
@@ -36,33 +40,44 @@ namespace HERO_Code_2019 {
             DUMPING
         }
 
+
+        //Setup
         public Excavation() {
-            excavationState = ExcavationState.STOWED;
+            excavationState = ExcavationState.INIT;
 
             //Left Actuator
+            leftActuator = TalonFactory.CreateLinearActuator(CAN_IDs.EXCAVATION.LEFT_ACTUATOR);
 
-            LeftActuator.ConfigSelectedFeedbackSensor(FeedbackDevice.Analog);
-            LeftActuator.SetInverted(true);
-            LeftActuator.SetSensorPhase(true);
-
-            LeftActuator.ConfigPeakCurrentLimit(6);
-            LeftActuator.ConfigPeakCurrentDuration(150);
-            LeftActuator.ConfigContinuousCurrentLimit(3);
 
             //Right Actuator
-
-            RightActuator.ConfigSelectedFeedbackSensor(FeedbackDevice.Analog);
-            RightActuator.SetInverted(true);
-            RightActuator.SetSensorPhase(true);
-
-            RightActuator.ConfigPeakCurrentLimit(6);
-            RightActuator.ConfigPeakCurrentDuration(150);
-            RightActuator.ConfigContinuousCurrentLimit(3);
+            rightActuator = TalonFactory.CreateLinearActuator(CAN_IDs.EXCAVATION.RIGHT_ACTUATOR);
 
 
 
         }
 
+        private static class TalonFactory {
+            public static TalonSRX CreateLinearActuator(int CAN_ID) {
+                TalonSRX talon = new TalonSRX(CAN_ID);
+
+                talon.ConfigSelectedFeedbackSensor(FeedbackDevice.Analog);
+                talon.ConfigFeedbackNotContinuous(true, 100);
+                talon.SetInverted(true);
+                talon.SetSensorPhase(true);
+
+                talon.ConfigPeakCurrentLimit(6);
+                talon.ConfigPeakCurrentDuration(150);
+                talon.ConfigContinuousCurrentLimit(3);
+
+                // talon.SetStatusFramePeriod(StatusFrame.Status_1_General_, 25); // Sets encoder value feedback rate -TODO
+
+                return talon;
+            }
+        }
+
+
+
+        //Update calls, run every robot loop
         public void Update(ref Controller controller, bool enabled) {
 
             if (!enabled) {
@@ -70,13 +85,21 @@ namespace HERO_Code_2019 {
                 return;
             }
 
-            UpdateStateMachine(ref controller);
 
+          //  UpdateStateMachine(ref controller);
+
+            Debug.Print(leftActuator.GetSelectedSensorPosition().ToString() + ",   " + rightActuator.GetSelectedSensorPosition() + ",    " + excavationState);
         }
-
 
         private void UpdateStateMachine(ref Controller controller) {
             switch (excavationState) {
+                //Initial State
+                case ExcavationState.INIT:
+                    if (controller.BUTTONS.Y) excavationState = ExcavationState.RAISING;
+                    if (controller.BUTTONS.A) excavationState = ExcavationState.STOWING;
+
+                    break;
+
 
                 //Static States
                 case ExcavationState.STOWED:
@@ -93,11 +116,15 @@ namespace HERO_Code_2019 {
 
                 //Dynamic States
                 case ExcavationState.RAISING:
-                    GoToActuatorPosition(ACTUATOR_RAISED_POSITION);
+                    if (controller.BUTTONS.A) excavationState = ExcavationState.STOWING;
+
+                    if (GoToActuatorPosition(ACTUATOR_RAISED_POSITION)) excavationState = ExcavationState.RAISED;
                     break;
 
                 case ExcavationState.STOWING:
-                    GoToActuatorPosition(ACTUATOR_STOWED_POSITION);
+                    if (controller.BUTTONS.Y) excavationState = ExcavationState.RAISING;
+
+                    if (GoToActuatorPosition(ACTUATOR_STOWED_POSITION)) excavationState = ExcavationState.STOWED;
                     break;
 
                 default:
@@ -115,8 +142,8 @@ namespace HERO_Code_2019 {
         //Motor Control
 
         private void Stop() {
-            LeftActuator.Set(ControlMode.PercentOutput, 0);
-            RightActuator.Set(ControlMode.PercentOutput, 0);
+            leftActuator.Set(ControlMode.PercentOutput, 0);
+            rightActuator.Set(ControlMode.PercentOutput, 0);
 
             //AugerRotator.Set(ControlMode.PercentOutput, 0);
             //LeftAugerExtender.Set(ControlMode.PercentOutput, 0);
@@ -127,18 +154,18 @@ namespace HERO_Code_2019 {
 
 
         bool stopped = true;
-        private void GoToActuatorPosition(int position) {
+        private bool GoToActuatorPosition(int position) {
 
-            int distanceToGo = position - LeftActuator.GetSelectedSensorPosition();
+            int distanceToGo = position - leftActuator.GetSelectedSensorPosition();
             int direction = distanceToGo > 0 ? 1 : -1;
             const float magnitude = 1.0f;
 
-            if (!stopped && (distanceToGo * direction) < 5) stopped = true;
-            else if (stopped && (distanceToGo * direction) > 15) stopped = false;
+            if (!stopped && (distanceToGo * direction) < 2) stopped = true;
+            else if (stopped && (distanceToGo * direction) > 5) stopped = false;
 
             if (!stopped) {
 
-                int posDifference = LeftActuator.GetSelectedSensorPosition() - RightActuator.GetSelectedSensorPosition();
+                int posDifference = leftActuator.GetSelectedSensorPosition() - rightActuator.GetSelectedSensorPosition();
 
                 int sign = posDifference > 0 ? 1 : -1;
                 const float P_Value = .05f;
@@ -146,12 +173,17 @@ namespace HERO_Code_2019 {
                 float lSpeed = (direction * magnitude) - (P_Value * posDifference);
                 float rSpeed = (direction * magnitude) + (P_Value * posDifference);
 
-                LeftActuator.Set(ControlMode.PercentOutput, lSpeed);
-                RightActuator.Set(ControlMode.PercentOutput, rSpeed);
+                leftActuator.Set(ControlMode.PercentOutput, lSpeed);
+                rightActuator.Set(ControlMode.PercentOutput, rSpeed);
 
-                Debug.Print(posDifference.ToString());
+                //   Debug.Print(posDifference.ToString());
+                return false;
+            }
 
-            } else Stop();
+            Stop();
+            return true;
+
+
         }
 
 
@@ -162,7 +194,7 @@ namespace HERO_Code_2019 {
             TalonSRX t;
             TalonInfo info = new TalonInfo();
 
-            t = LeftActuator;
+            t = leftActuator;
             info.CAN_ID = (short)t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
@@ -171,7 +203,7 @@ namespace HERO_Code_2019 {
 
             talonInfoList.Add(new TalonInfo(info));
 
-            t = RightActuator;
+            t = rightActuator;
             info.CAN_ID = (short)t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
