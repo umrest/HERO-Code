@@ -88,7 +88,7 @@ namespace HERO_Code_2019 {
 
           //  UpdateStateMachine(ref controller);
 
-            Debug.Print(leftActuator.GetSelectedSensorPosition().ToString() + ",   " + rightActuator.GetSelectedSensorPosition() + ",    " + excavationState);
+           // Debug.Print(leftActuator.GetSelectedSensorPosition().ToString() + ",   " + rightActuator.GetSelectedSensorPosition() + ",    " + excavationState);
         }
 
         private void UpdateStateMachine(ref Controller controller) {

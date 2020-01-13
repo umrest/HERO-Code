@@ -50,6 +50,8 @@ namespace HERO_Code_2019 {
         public void DecodeData(byte[] data) {
 
             //Read in PAIRS of bytes, and convert to short
+
+            //LARGE field location tag
             orientation.yaw = TypeConverter.Remap(TypeConverter.BytesToShort(data[1], data[2]), MAX_ANGLE);
             orientation.pitch = TypeConverter.Remap(TypeConverter.BytesToShort(data[3], data[4]), MAX_ANGLE);
             orientation.roll = TypeConverter.Remap(TypeConverter.BytesToShort(data[5], data[6]), MAX_ANGLE);
@@ -59,7 +61,7 @@ namespace HERO_Code_2019 {
             location.z = TypeConverter.BytesToShort(data[11], data[12]) / DISTANCE_RESOLUTION;
 
 
-            //
+            //SMALL - Hopper lineup tag
             orientation2.yaw = TypeConverter.Remap(TypeConverter.BytesToShort(data[13], data[14]), MAX_ANGLE);
             orientation2.pitch = TypeConverter.Remap(TypeConverter.BytesToShort(data[15], data[16]), MAX_ANGLE);
             orientation2.roll = TypeConverter.Remap(TypeConverter.BytesToShort(data[17], data[18]), MAX_ANGLE);
