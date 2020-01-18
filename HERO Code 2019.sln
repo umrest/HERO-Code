@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayModule Test", "..\Di
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PigeonTest", "..\PigeonTest\PigeonTest.csproj", "{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPIO Test", "..\GPIO Test\GPIO Test.csproj", "{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,12 @@ Global
 		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
