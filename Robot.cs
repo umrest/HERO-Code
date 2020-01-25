@@ -29,9 +29,6 @@ namespace HERO_Code_2019 {
         //Initialize the Excavator motor controllers
         Excavation excavation = new Excavation();
 
-        //TESTTEST
-        //4static TalonSRX pigonTalon = new TalonSRX(9);
-        //static PigeonIMU gyro = new PigeonIMU(pigonTalon);
 
         public Robot() {
 
@@ -63,8 +60,6 @@ namespace HERO_Code_2019 {
             controlModeHandler.SetMode(ControlModeHandler.ControlMode.DISABLED);
 
 
-            //Debug.Print("TRUE");
-
             if (ROBOT_ENABLED) {
 
                 //Heartbeat pulse to the motors to enable them
@@ -81,10 +76,14 @@ namespace HERO_Code_2019 {
 
                 //MoveMotors
                 if (CAN_NETWORK_IS_ENABLED) {
-                    driveBase.Update(ref logitechController, controlModeHandler.IsRobotActive());
+                    Debug.Print("Fix BackRight shaft key DB");
+                   // driveBase.Update(ref logitechController, controlModeHandler.IsRobotActive());
                     excavation.Update(ref logitechController, controlModeHandler.IsRobotActive());
                 }
             }
+
+
+            NUC_SerialConnection.WriteDashboardState();
 
             //Serial write to Dashboard with talon motor data
             if (CAN_NETWORK_IS_ENABLED) packageTalonInfo();
@@ -100,7 +99,7 @@ namespace HERO_Code_2019 {
             foreach (TalonInfo info in driveBase.GetTalonInfo()) talonInfoList.Add(info);
             foreach (TalonInfo info in excavation.GetTalonInfo()) talonInfoList.Add(info);
 
-            NUC_SerialConnection.WriteToNUC(ref talonInfoList);
+            NUC_SerialConnection.WriteMotorInfo(ref talonInfoList);
         }
 
 

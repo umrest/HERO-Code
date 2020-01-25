@@ -3,6 +3,7 @@ using Microsoft.SPOT;
 using System.Collections;
 
 
+
 namespace HERO_Code_2019 {
     class SerialCommsHandler {
 
@@ -24,8 +25,24 @@ namespace HERO_Code_2019 {
         //Serial comms constants
         public static class Constants {
 
-            public const int PACKET_SIZE_READ = 128;
-            public const int PACKET_SIZE_WRITE = 230;
+            public const int KEY_SIZE = 3;
+
+            public static byte[] PacketSize = {
+                //Read
+                0,      // Padding  0
+                8,      // Joystick 1
+                36,     // Vision   2
+                0,0,0,0,0,0, // [3,8]
+                9,      // Dashboard_READ 9
+
+                //Write
+                120,    // Motor Info OUT
+                1,      //Dashboard State OUT
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+          
+                //Write
+            };
+
 
             public const int BAUD_RATE = 115200;
 
@@ -35,7 +52,10 @@ namespace HERO_Code_2019 {
                 public const int VISION = 2;
                 public const int REALESENSE = 3;
                 public const int DASHBOARD_IN = 9;
-                public const int DASHBOARD_OUT = 10;
+
+                //OUT
+                public const int MOTOR_INFO_OUT = 10;
+                public const int DASHBOARD_OUT = 11;
             }
 
 
@@ -69,11 +89,6 @@ namespace HERO_Code_2019 {
 
             //Assert that the packet size is less than the size of the serial buffer
             // (The buffer physically in the serial chip itself)
-            Debug.Assert(Constants.PACKET_SIZE_READ <= 256);
-
-
-            //Incoming packet is read into this array
-            byte[] in_bytes = new byte[Constants.PACKET_SIZE_READ];
 
 
             if (NUC_serialPort.BytesToRead > 250) {
@@ -82,24 +97,32 @@ namespace HERO_Code_2019 {
                 Debug.Assert(NUC_serialPort.BytesToRead < 250);
             }
 
-            //Wait for at least 12
-            if (NUC_serialPort.BytesToRead >= Constants.PACKET_SIZE_READ + 3) {
+            //Wait for at least 4 Bytes (3 key bytes and type byte)
+            if (NUC_serialPort.BytesToRead > Constants.KEY_SIZE) {
 
-
-
-
+                //Verify the packet key. If Invalid, discard the buffer
                 if ((NUC_serialPort.ReadByte() != KEY0) || (NUC_serialPort.ReadByte() != KEY1) || (NUC_serialPort.ReadByte() != KEY2)) {
                     Debug.Print("Invalid three byte key!!!");
                     NUC_serialPort.DiscardInBuffer();
                     return;
                 }
 
+                //Read the packet type, create array for the incoming bytes sized based on the packet type
+                //Incoming packet is read into this array
+                byte type = (byte)NUC_serialPort.ReadByte();
+                byte packetSize = Constants.PacketSize[type];
+                byte[] in_bytes = new byte[Constants.PacketSize[type]];
+
+
+                //Block until whole packet arrives in serial buffer
+                while (NUC_serialPort.BytesToRead < packetSize) continue;
+
 
                 //Read the next packet into an empty byte array
-                NUC_serialPort.Read(in_bytes, 0, Constants.PACKET_SIZE_READ);
+                NUC_serialPort.Read(in_bytes, 0, packetSize);
 
                 //Access the packet type from the first byte, and send the byte aray to the appropriate decoder
-                byte type = in_bytes[0];
+
 
 
                 switch (type) {
@@ -130,7 +153,7 @@ namespace HERO_Code_2019 {
 
         //Updates the values of an input controller object with the data from a joystick packet
         public void UpdateJoystickValues(ref Controller controller) {
-            joystickDecoder.updateJoystickValues(ref controller);
+            joystickDecoder.UpdateJoystickValues(ref controller);
         }
 
 
@@ -145,27 +168,47 @@ namespace HERO_Code_2019 {
         }
 
         //Returns Orientation and Location data structures from vision calculations
-        public VisionDecoder.Orientation GetVisionOrientation() {
-            return visionDecoder.GetOrientation();
+        public VisionDecoder.Orientation GetVisionOrientation_HopperLineup() {
+            return visionDecoder.GetOrientation_HopperLineup();
         }
 
-        public VisionDecoder.Location GetVisionLocation() {
-            return visionDecoder.GetLocation();
+        public VisionDecoder.Location GetVisionLocation_HopperLineup() {
+            return visionDecoder.GetLocation_HopperLineup();
+        }
+        public VisionDecoder.Orientation GetVisionOrientation_FieldNavigation() {
+            return visionDecoder.GetOrientation_FieldNavigation();
+        }
+
+        public VisionDecoder.Location GetVisionLocation_FieldNavigation() {
+            return visionDecoder.GetLocation_FieldNavigation();
         }
 
 
         // ------------------- WRITING ------------------- //
 
-        public void WriteToNUC(ref ArrayList talonInfoList) {
-
+        public void WriteDashboardState() {
+            //Write the dashboard
             NUC_serialPort.WriteByte(KEY0);
             NUC_serialPort.WriteByte(KEY1);
             NUC_serialPort.WriteByte(KEY2);
 
-            byte[] packet = new byte[Constants.PACKET_SIZE_WRITE];
-
-
             NUC_serialPort.WriteByte(Constants.PacketType.DASHBOARD_OUT);
+            NUC_serialPort.WriteByte((byte)GetControlMode());
+
+        }
+
+
+        public void WriteMotorInfo(ref ArrayList talonInfoList) {
+
+            //Write the motor
+            NUC_serialPort.WriteByte(KEY0);
+            NUC_serialPort.WriteByte(KEY1);
+            NUC_serialPort.WriteByte(KEY2);
+
+            byte[] motorInfoPacket = new byte[Constants.PacketSize[Constants.PacketType.MOTOR_INFO_OUT]];
+
+
+            NUC_serialPort.WriteByte(Constants.PacketType.MOTOR_INFO_OUT);
 
 
             int idx = 0;
@@ -174,12 +217,12 @@ namespace HERO_Code_2019 {
 
                 TalonInfo talonInfo = (TalonInfo)o;
 
-                talonInfo.GetDataAsByteArray().CopyTo(packet, TalonInfo.NUM_BYTES * idx);
+                talonInfo.GetDataAsByteArray().CopyTo(motorInfoPacket, TalonInfo.NUM_BYTES * idx);
 
                 idx++;
             }
 
-            NUC_serialPort.Write(packet, 0, Constants.PACKET_SIZE_WRITE);
+            NUC_serialPort.Write(motorInfoPacket, 0, motorInfoPacket.Length);
 
 
         }

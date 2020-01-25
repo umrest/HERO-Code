@@ -5,7 +5,6 @@ namespace HERO_Code_2019 {
     class DashboardStateDecoder {
 
         private const byte ENABLE_KEY_START_VALUE = 20;
-        private const int KEY_LENGTH = 8;
 
         private bool enabled;
         private byte controlMode;
@@ -17,8 +16,8 @@ namespace HERO_Code_2019 {
             //If any of the 8 are incorrect, DO NOT enable
             enabled = true;
 
-            for (int i = 0; i < KEY_LENGTH; i++) {
-                if (data[i + 1] != (ENABLE_KEY_START_VALUE + i)) {
+            for (int i = 0; i < 8; i++) {
+                if (data[i] != (ENABLE_KEY_START_VALUE + i)) {
                     enabled = false;
                     break;
                 }
@@ -31,9 +30,9 @@ namespace HERO_Code_2019 {
             }
 
             //Read in the robot control state byte
-            controlMode = data[KEY_LENGTH + 1];
+            controlMode = data[8];
 
-            //Debug.Print(controlMode.ToString());
+          //  Debug.Print(controlMode.ToString());
 
         }
 

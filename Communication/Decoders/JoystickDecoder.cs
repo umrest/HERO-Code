@@ -18,6 +18,11 @@ namespace HERO_Code_2019 {
         private bool button_lj;
         private bool button_rj;
 
+        private bool button_povUp;
+        private bool button_povRight;
+        private bool button_povDown;
+        private bool button_povLeft;
+
         private float lj_x;
         private float lj_y;
         private float rj_x;
@@ -31,8 +36,8 @@ namespace HERO_Code_2019 {
 
             //Extract the individual bits from 2 bytes
             //and assign to button values
-            BitArray8 button_array1 = new BitArray8(data[1]);
-            BitArray8 button_array2 = new BitArray8(data[2]);
+            BitArray8 button_array1 = new BitArray8(data[0]);
+            BitArray8 button_array2 = new BitArray8(data[1]);
 
             button_a = button_array1.GetBit(0);
             button_b = button_array1.GetBit(1);
@@ -46,6 +51,11 @@ namespace HERO_Code_2019 {
             button_lj = button_array2.GetBit(0);
             button_rj = button_array2.GetBit(1);
 
+            button_povUp = button_array2.GetBit(2);
+            button_povRight = button_array2.GetBit(3);
+            button_povDown = button_array2.GetBit(4);
+            button_povLeft = button_array2.GetBit(5);
+
             //Read joystick axes
             //Invert the y axes so that positive values are up on the joystick
 
@@ -54,19 +64,19 @@ namespace HERO_Code_2019 {
 
 
 
-            lj_x = byteToFloat(data[3]);
-            lj_y = -byteToFloat(data[4]);
-            rj_x = byteToFloat(data[5]);
-            rj_y = -byteToFloat(data[6]);
+            lj_x = ByteToFloat(data[2]);
+            lj_y = -ByteToFloat(data[3]);
+            rj_x = ByteToFloat(data[4]);
+            rj_y = -ByteToFloat(data[5]);
 
 
             //Debug Only
-           // printAllValues();
+            // PrintAllValues();
         }
 
 
         //Print all joystick buttons and axes
-        private void printAllValues() {
+        private void PrintAllValues() {
 
             Debug.Print("A Button: " + button_a.ToString());
             Debug.Print("B Button: " + button_b.ToString());
@@ -89,7 +99,7 @@ namespace HERO_Code_2019 {
 
 
         //Maps an input axis byte [0:255] to a float [-1:1]
-        private float byteToFloat(byte value_in) {
+        private float ByteToFloat(byte value_in) {
             float value = (float)value_in;
 
             float mid = 255 / 2;
@@ -100,8 +110,7 @@ namespace HERO_Code_2019 {
             return value;
         }
 
-
-        public void updateJoystickValues(ref Controller controller) {
+        public void UpdateJoystickValues(ref Controller controller) {
 
             //AXES
             controller.AXES.LEFT_X = lj_x;
@@ -125,6 +134,11 @@ namespace HERO_Code_2019 {
 
             controller.BUTTONS.LJ = button_lj;
             controller.BUTTONS.RJ = button_rj;
+
+            controller.BUTTONS.POV_UP = button_povUp;
+            controller.BUTTONS.POV_RIGHT = button_povRight;
+            controller.BUTTONS.POV_DOWN = button_povDown;
+            controller.BUTTONS.POV_LEFT = button_povLeft;
 
             //controller.AXES.LT = controller.GetAxis(4);
             //controller.AXES.RT = controller.GetAxis(5);

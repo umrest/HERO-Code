@@ -8,18 +8,23 @@ using System.Collections;
 
 namespace HERO_Code_2019 {
 
-
-
     class Excavation {
 
-        private static int ACTUATOR_STOWED_POSITION = 270;
-        private static int ACTUATOR_RAISED_POSITION = 755;
+        private const int ACTUATOR_STOWED_POSITION = 270;
+        private const int ACTUATOR_RAISED_POSITION = 755;
 
 
         private TalonSRX leftActuator;
         private TalonSRX rightActuator;
 
-        private LightSensor lightSensor = new LightSensor(CTRE.HERO.IO.Port8.Analog_Pin5);
+        private const int STEPPER_MAX_SPEED = 250;
+        private StepperMotorController augerExtender;
+
+
+
+        private LightSensor lightSensor;
+
+
 
         //private TalonSRX AugerRotator = new TalonSRX(13);
         //private TalonSRX LeftAugerExtender = new TalonSRX(14);
@@ -45,15 +50,16 @@ namespace HERO_Code_2019 {
         public Excavation() {
             excavationState = ExcavationState.INIT;
 
-            //Left Actuator
+            //Actuators
             leftActuator = TalonFactory.CreateLinearActuator(CAN_IDs.EXCAVATION.LEFT_ACTUATOR);
-
-
-            //Right Actuator
             rightActuator = TalonFactory.CreateLinearActuator(CAN_IDs.EXCAVATION.RIGHT_ACTUATOR);
 
+            //Stepper Motors (controlled from one motor controller object)
+            augerExtender = new StepperMotorController(CTRE.HERO.IO.Port3.Pin3, CTRE.HERO.IO.Port3.PWM_Pin9, STEPPER_MAX_SPEED);
+            augerExtender.Stop();
 
-
+            //Light sensor for detecting full excavation tube
+            lightSensor = new LightSensor(CTRE.HERO.IO.Port8.Analog_Pin5);
         }
 
         private static class TalonFactory {
@@ -81,50 +87,64 @@ namespace HERO_Code_2019 {
         public void Update(ref Controller controller, bool enabled) {
 
             if (!enabled) {
-                Stop();
+                StopAll();
                 return;
             }
 
 
-          //  UpdateStateMachine(ref controller);
+            UpdateStateMachine(ref controller);
 
-           // Debug.Print(leftActuator.GetSelectedSensorPosition().ToString() + ",   " + rightActuator.GetSelectedSensorPosition() + ",    " + excavationState);
+            // Debug.Print(leftActuator.GetSelectedSensorPosition().ToString() + ",   " + rightActuator.GetSelectedSensorPosition() + ",    " + excavationState);
         }
 
         private void UpdateStateMachine(ref Controller controller) {
             switch (excavationState) {
+
                 //Initial State
                 case ExcavationState.INIT:
                     if (controller.BUTTONS.Y) excavationState = ExcavationState.RAISING;
                     if (controller.BUTTONS.A) excavationState = ExcavationState.STOWING;
 
+                    StopAll();
                     break;
 
 
                 //Static States
                 case ExcavationState.STOWED:
-                    Stop();
+                    StopAll();
 
                     if (controller.BUTTONS.Y) excavationState = ExcavationState.RAISING;
                     break;
 
                 case ExcavationState.RAISED:
-                    Stop();
+                    leftActuator.Set(ControlMode.PercentOutput, 0);
+                    rightActuator.Set(ControlMode.PercentOutput, 0);
+
 
                     if (controller.BUTTONS.A) excavationState = ExcavationState.STOWING;
+
+
+                    //Control auger extension stepper motors
+                    if (controller.BUTTONS.POV_UP) augerExtender.SetSpeed(-0.1f);
+                    else if (controller.BUTTONS.POV_DOWN) augerExtender.SetSpeed(0.1f);
+                    else augerExtender.Stop();
+
                     break;
 
                 //Dynamic States
                 case ExcavationState.RAISING:
                     if (controller.BUTTONS.A) excavationState = ExcavationState.STOWING;
-
                     if (GoToActuatorPosition(ACTUATOR_RAISED_POSITION)) excavationState = ExcavationState.RAISED;
+
+                    augerExtender.Stop();
+
                     break;
 
                 case ExcavationState.STOWING:
                     if (controller.BUTTONS.Y) excavationState = ExcavationState.RAISING;
-
                     if (GoToActuatorPosition(ACTUATOR_STOWED_POSITION)) excavationState = ExcavationState.STOWED;
+
+                    augerExtender.Stop();
                     break;
 
                 default:
@@ -141,9 +161,10 @@ namespace HERO_Code_2019 {
 
         //Motor Control
 
-        private void Stop() {
+        private void StopAll() {
             leftActuator.Set(ControlMode.PercentOutput, 0);
             rightActuator.Set(ControlMode.PercentOutput, 0);
+            augerExtender.Stop();
 
             //AugerRotator.Set(ControlMode.PercentOutput, 0);
             //LeftAugerExtender.Set(ControlMode.PercentOutput, 0);
@@ -180,7 +201,7 @@ namespace HERO_Code_2019 {
                 return false;
             }
 
-            Stop();
+            StopAll();
             return true;
 
 

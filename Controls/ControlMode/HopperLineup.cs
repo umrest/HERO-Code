@@ -11,7 +11,7 @@ namespace HERO_Code_2019 {
             const float BEGIN_RAMP_DOWN_AT = 15; //DEGREES
 
 
-            float yaw = NUC_SerialConnection.GetVisionOrientation().yaw;
+            float yaw = NUC_SerialConnection.GetVisionOrientation_HopperLineup().yaw;
 
             float driveSpeed = Controls.ControlAlgorithms.P_Loop(yaw, BEGIN_RAMP_DOWN_AT, 0);
 
@@ -28,7 +28,7 @@ namespace HERO_Code_2019 {
 
 
 
-            float dist = NUC_SerialConnection.GetVisionLocation().z;
+            float dist = NUC_SerialConnection.GetVisionLocation_HopperLineup().z;
 
 
             float driveSpeed = Controls.ControlAlgorithms.P_Loop(dist, BEGIN_RAMP_DOWN_AT, STOPPING_DISTANCE);
@@ -42,7 +42,7 @@ namespace HERO_Code_2019 {
         }
 
         public static float HorizontalDisplacementLoop(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
-            float dist = NUC_SerialConnection.GetVisionLocation().x;
+            float dist = NUC_SerialConnection.GetVisionLocation_HopperLineup().x;
 
             const float BEGIN_RAMP_DOWN_AT = 20;
 

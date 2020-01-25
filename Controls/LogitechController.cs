@@ -35,11 +35,12 @@ namespace HERO_Code_2019 {
 
             public bool LT = false;
             public bool RT = false;
-        }
 
-        //public int POV = -1;
-        //public int POV_UP = 1;
-        //public int POV_DOWN = 2;
+            public bool POV_UP = false;
+            public bool POV_RIGHT = false;
+            public bool POV_DOWN = false;
+            public bool POV_LEFT = false;
+        }
 
 
         public Buttons BUTTONS = new Buttons();

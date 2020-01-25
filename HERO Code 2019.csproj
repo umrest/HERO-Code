@@ -36,6 +36,7 @@
     <Compile Include="Communication\Decoders\VisionDecoder.cs" />
     <Compile Include="Communication\SerialCommsHandler.cs" />
     <Compile Include="Components\LightSensor.cs" />
+    <Compile Include="Components\StepperMotorController.cs" />
     <Compile Include="Controls\CAN_IDs.cs" />
     <Compile Include="Controls\ControlMode\ControlAlgorithms.cs" />
     <Compile Include="Controls\ControlMode\HopperLineup.cs" />
@@ -62,6 +63,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.SPOT.Hardware" />
+    <Reference Include="Microsoft.SPOT.Hardware.PWM" />
     <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
     <Reference Include="Microsoft.SPOT.Native" />
   </ItemGroup>
