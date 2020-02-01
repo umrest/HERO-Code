@@ -10,10 +10,10 @@ using CTRE.Phoenix.MotorControl.CAN;
 
 namespace HERO_Code_2019 {
     class DriveBase {
-        private TalonSRX FrontLeft = new TalonSRX(1);
-        private TalonSRX FrontRight = new TalonSRX(2);
-        private TalonSRX BackLeft = new TalonSRX(3);
-        private TalonSRX BackRight = new TalonSRX(4);
+        private TalonSRX FrontLeft;
+        private TalonSRX FrontRight;
+        private TalonSRX BackLeft;
+        private TalonSRX BackRight;
 
         private const short ARCADE = 1;
         private const short TANK = 2;
@@ -26,30 +26,11 @@ namespace HERO_Code_2019 {
         public DriveBase(short mode = TANK) {
             MODE = mode;
 
-            const int MAX_CURRENT = 5;
-
-            FrontLeft.ConfigContinuousCurrentLimit(MAX_CURRENT);
-            FrontRight.ConfigContinuousCurrentLimit(MAX_CURRENT);
-            BackLeft.ConfigContinuousCurrentLimit(MAX_CURRENT);
-            BackRight.ConfigContinuousCurrentLimit(MAX_CURRENT);
-
-            FrontLeft.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
-            FrontLeft.ConfigPeakCurrentDuration(0);
-
-            FrontRight.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
-            FrontRight.ConfigPeakCurrentDuration(0);
-
-            BackLeft.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
-            BackLeft.ConfigPeakCurrentDuration(0);
-
-            BackRight.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
-            BackRight.ConfigPeakCurrentDuration(0);
-
-
-
-            FrontRight.SetInverted(true);
-            BackRight.SetInverted(true);
-
+            FrontLeft = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.FRONT_LEFT_WHEEL);
+            FrontRight = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.FRONT_RIGHT_WHEEL);
+            BackLeft = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.BACK_LEFT_WHEEL, true);
+            BackRight = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.BACK_RIGHT_WHEEL, true);
+       
         }
 
         //Main drive function, called from the robot class

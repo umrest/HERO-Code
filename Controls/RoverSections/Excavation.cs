@@ -20,6 +20,7 @@ namespace HERO_Code_2019 {
         private const int STEPPER_MAX_SPEED = 250;
         private StepperMotorController augerExtender;
 
+        private TalonSRX augerRotator;
 
 
         private LightSensor lightSensor;
@@ -58,30 +59,11 @@ namespace HERO_Code_2019 {
             augerExtender = new StepperMotorController(CTRE.HERO.IO.Port3.Pin3, CTRE.HERO.IO.Port3.PWM_Pin9, STEPPER_MAX_SPEED);
             augerExtender.Stop();
 
+            augerRotator = TalonFactory.CreateAugerRotator(CAN_IDs.EXCAVATION.AUGER_ROTATOR);
+
             //Light sensor for detecting full excavation tube
             lightSensor = new LightSensor(CTRE.HERO.IO.Port8.Analog_Pin5);
         }
-
-        private static class TalonFactory {
-            public static TalonSRX CreateLinearActuator(int CAN_ID) {
-                TalonSRX talon = new TalonSRX(CAN_ID);
-
-                talon.ConfigSelectedFeedbackSensor(FeedbackDevice.Analog);
-                talon.ConfigFeedbackNotContinuous(true, 100);
-                talon.SetInverted(true);
-                talon.SetSensorPhase(true);
-
-                talon.ConfigPeakCurrentLimit(6);
-                talon.ConfigPeakCurrentDuration(150);
-                talon.ConfigContinuousCurrentLimit(3);
-
-                // talon.SetStatusFramePeriod(StatusFrame.Status_1_General_, 25); // Sets encoder value feedback rate -TODO
-
-                return talon;
-            }
-        }
-
-
 
         //Update calls, run every robot loop
         public void Update(ref Controller controller, bool enabled) {
@@ -145,6 +127,13 @@ namespace HERO_Code_2019 {
                     if (GoToActuatorPosition(ACTUATOR_STOWED_POSITION)) excavationState = ExcavationState.STOWED;
 
                     augerExtender.Stop();
+                    break;
+
+
+
+                case ExcavationState.EXCAVATING:
+                    break;
+                case ExcavationState.DUMPING:
                     break;
 
                 default:

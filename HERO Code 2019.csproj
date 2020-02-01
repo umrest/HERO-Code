@@ -43,6 +43,7 @@
     <Compile Include="Controls\LogitechController.cs" />
     <Compile Include="Controls\ControlMode\ControlModeHandler.cs" />
     <Compile Include="Controls\RoverSections\Excavation.cs" />
+    <Compile Include="Controls\TalonFactory.cs" />
     <Compile Include="Controls\TalonInfo.cs" />
     <Compile Include="Controls\MotorSet.cs" />
     <Compile Include="Utils\BitArray8.cs" />
