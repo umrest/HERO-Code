@@ -40,6 +40,8 @@
     <Compile Include="Controls\CAN_IDs.cs" />
     <Compile Include="Controls\ControlMode\ControlAlgorithms.cs" />
     <Compile Include="Controls\ControlMode\HopperLineup.cs" />
+    <Compile Include="Controls\ControlMode\Orient.cs" />
+    <Compile Include="Controls\ControlMode\Startup.cs" />
     <Compile Include="Controls\LogitechController.cs" />
     <Compile Include="Controls\ControlMode\ControlModeHandler.cs" />
     <Compile Include="Controls\RoverSections\Excavation.cs" />

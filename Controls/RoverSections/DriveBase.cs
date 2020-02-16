@@ -27,8 +27,8 @@ namespace HERO_Code_2019 {
             MODE = mode;
 
             FrontLeft = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.FRONT_LEFT_WHEEL);
-            FrontRight = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.FRONT_RIGHT_WHEEL);
-            BackLeft = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.BACK_LEFT_WHEEL, true);
+            FrontRight = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.FRONT_RIGHT_WHEEL, true);
+            BackLeft = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.BACK_LEFT_WHEEL);
             BackRight = TalonFactory.CreateDriveBaseTalon(CAN_IDs.DRIVE_BASE.BACK_RIGHT_WHEEL, true);
        
         }

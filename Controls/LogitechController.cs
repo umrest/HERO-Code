@@ -17,7 +17,6 @@ namespace HERO_Code_2019 {
             public double RT = 0;
         }
 
-
         public class Buttons {
             public bool A = false;
             public bool B = false;

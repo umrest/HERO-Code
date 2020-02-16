@@ -31,7 +31,7 @@ namespace HERO_Code_2019 {
                 //Read
                 0,      // Padding  0
                 8,      // Joystick 1
-                36,     // Vision   2
+                31,     // Vision   2
                 0,0,0,0,0,0, // [3,8]
                 9,      // Dashboard_READ 9
 
@@ -168,6 +168,10 @@ namespace HERO_Code_2019 {
         }
 
         //Returns Orientation and Location data structures from vision calculations
+        public bool HasVisionConnection() {
+            return visionDecoder.GetHasVisionConnection();
+        }
+
         public VisionDecoder.Orientation GetVisionOrientation_HopperLineup() {
             return visionDecoder.GetOrientation_HopperLineup();
         }
@@ -181,6 +185,10 @@ namespace HERO_Code_2019 {
 
         public VisionDecoder.Location GetVisionLocation_FieldNavigation() {
             return visionDecoder.GetLocation_FieldNavigation();
+        }
+
+        public VisionDecoder.AbsolutePosition GetAbsolutePosition() {
+            return visionDecoder.GetAbsolutePosition();
         }
 
 

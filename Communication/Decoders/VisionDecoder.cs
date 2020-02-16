@@ -30,12 +30,25 @@ namespace HERO_Code_2019 {
             }
         }
 
+        public struct AbsolutePosition {
+            public float x, y, yaw;
+
+            public void reset() {
+                x = 0;
+                y = 0;
+                yaw = 0;
+            }
+        }
+
+        private bool hasVisionConnection;
 
         private Orientation orientation_FieldNavigation;
         private Location location_FieldNavigation;
 
         private Orientation orientation_HopperLineup;
         private Location location_HopperLineup;
+
+        private AbsolutePosition absolutePostion;
 
         private static float MAX_ANGLE = 90.0f;
         private static float DISTANCE_RESOLUTION = 10.0f;
@@ -50,6 +63,8 @@ namespace HERO_Code_2019 {
         public void DecodeData(byte[] data) {
 
             //Read in PAIRS of bytes, and convert to short
+            hasVisionConnection = (data[30] == 1);
+
 
             //LARGE field location tag
             orientation_FieldNavigation.yaw = TypeConverter.Remap(TypeConverter.BytesToShort(data[0], data[1]), MAX_ANGLE);
@@ -71,10 +86,16 @@ namespace HERO_Code_2019 {
             location_HopperLineup.z = TypeConverter.BytesToShort(data[22], data[23]) / DISTANCE_RESOLUTION;
 
 
+            //ABSOLUTE - Absolute Position
+            absolutePostion.yaw = TypeConverter.Remap(TypeConverter.BytesToShort(data[24], data[25]), MAX_ANGLE);
+            absolutePostion.x = TypeConverter.BytesToShort(data[26], data[27]) / DISTANCE_RESOLUTION;
+            absolutePostion.y = TypeConverter.BytesToShort(data[28], data[29]) / DISTANCE_RESOLUTION;
 
-           //PrintAll();
 
-            
+
+            //PrintAll();
+
+
         }
 
         public void PrintAll() {
@@ -82,6 +103,10 @@ namespace HERO_Code_2019 {
             Debug.Print("X: " + location_FieldNavigation.x.ToString() + " Y: " + location_FieldNavigation.y.ToString() + " Z: " + location_FieldNavigation.z.ToString());
             Debug.Print("");
 
+        }
+
+        public bool GetHasVisionConnection() {
+            return hasVisionConnection;
         }
 
         //Getters for orientation and location data
@@ -101,6 +126,10 @@ namespace HERO_Code_2019 {
 
         public Location GetLocation_FieldNavigation() {
             return location_FieldNavigation;
+        }
+
+        public AbsolutePosition GetAbsolutePosition() {
+            return absolutePostion;
         }
 
     }

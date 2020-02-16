@@ -1,5 +1,6 @@
 using System;
 using Microsoft.SPOT;
+using CTRE.Phoenix.MotorControl;
 using CTRE.Phoenix.MotorControl.CAN;
 
 namespace HERO_Code_2019 {
@@ -9,12 +10,12 @@ namespace HERO_Code_2019 {
         public static TalonSRX CreateDriveBaseTalon(int CAN_ID, bool inverted = false) {
             TalonSRX talon = new TalonSRX(CAN_ID);
 
-            const int MAX_CURRENT = 5;
+            const int MAX_CURRENT = 10;
 
             talon.ConfigContinuousCurrentLimit(MAX_CURRENT);
             talon.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
             talon.ConfigPeakCurrentDuration(0);
-
+            talon.SetInverted(inverted);
             return talon;
         }
 

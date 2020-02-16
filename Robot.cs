@@ -27,7 +27,7 @@ namespace HERO_Code_2019 {
         DriveBase driveBase = new DriveBase();
 
         //Initialize the Excavator motor controllers
-        Excavation excavation = new Excavation();
+      //  Excavation excavation = new Excavation();
 
 
         public Robot() {
@@ -76,9 +76,9 @@ namespace HERO_Code_2019 {
 
                 //MoveMotors
                 if (CAN_NETWORK_IS_ENABLED) {
-                    Debug.Print("Fix BackRight shaft key DB");
-                   // driveBase.Update(ref logitechController, controlModeHandler.IsRobotActive());
-                    excavation.Update(ref logitechController, controlModeHandler.IsRobotActive());
+                    // Debug.Print("Fix BackRight shaft key DB");
+                    driveBase.Update(ref logitechController, controlModeHandler.IsRobotActive());
+                  //  excavation.Update(ref logitechController, controlModeHandler.IsRobotActive());
                 }
             }
 
@@ -97,7 +97,7 @@ namespace HERO_Code_2019 {
             ArrayList talonInfoList = new ArrayList();
 
             foreach (TalonInfo info in driveBase.GetTalonInfo()) talonInfoList.Add(info);
-            foreach (TalonInfo info in excavation.GetTalonInfo()) talonInfoList.Add(info);
+          //  foreach (TalonInfo info in excavation.GetTalonInfo()) talonInfoList.Add(info);
 
             NUC_SerialConnection.WriteMotorInfo(ref talonInfoList);
         }

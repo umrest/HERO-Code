@@ -3,6 +3,21 @@ using Microsoft.SPOT;
 
 namespace HERO_Code_2019 {
     class ControlModeHandler {
+        private enum AutonomousState {
+            STOPPED,
+
+            STARTUP,
+            ORIENT,
+            NAVIGATE_TO_EXCAVATION_ZONE,
+            EXCAVATE,
+            NAVIGATE_TO_DUMPING_ZONE,
+            HOPPER_LINEUP,
+            DUMP_THE_GOODS
+        }
+
+        AutonomousState autonState;
+
+        Orient orient;
 
         public static class ControlMode {
             public const int TEST = 3;
@@ -22,6 +37,11 @@ namespace HERO_Code_2019 {
         public ControlModeHandler() {
             mode = ControlMode.DISABLED;
             isRobotActive = false;
+
+            autonState = AutonomousState.STARTUP;
+
+            
+            orient = new Orient();
         }
 
         //Applies different values to the controller object based on the current control mode
@@ -63,8 +83,27 @@ namespace HERO_Code_2019 {
             }
         }
 
-        //Autonomous blocks TODO
+
+        //Autonomous
         private void AutonomousMode(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
+            switch (autonState) {
+                case AutonomousState.STOPPED:
+                    logitechController.ResetValues();
+                    break;
+                case AutonomousState.STARTUP:
+
+
+                    break;
+
+                case AutonomousState.ORIENT:
+
+                    break;
+                case AutonomousState.HOPPER_LINEUP:
+                    HopperLineup.HopperLineupLoop(ref logitechController, ref NUC_SerialConnection);
+                    break;
+                default:
+                    break;
+            }
             HopperLineup.HopperLineupLoop(ref logitechController, ref NUC_SerialConnection);
         }
 
@@ -75,7 +114,8 @@ namespace HERO_Code_2019 {
 
         //For running test code, testing new functions
         private void TestMode(ref Controller logitechController, ref SerialCommsHandler NUC_SerialConnection) {
-            HopperLineup.HorizontalDisplacementLoop(ref logitechController, ref NUC_SerialConnection);
+            //HopperLineup.HorizontalDisplacementLoop(ref logitechController, ref NUC_SerialConnection);
+            orient.Update(ref logitechController, ref NUC_SerialConnection);
         }
 
 

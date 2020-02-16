@@ -21,11 +21,9 @@ namespace HERO_Code_2019 {
         private StepperMotorController augerExtender;
 
         private TalonSRX augerRotator;
-
-
         private LightSensor lightSensor;
 
-
+        private CTRE.Phoenix.CANifier CANifier;
 
         //private TalonSRX AugerRotator = new TalonSRX(13);
         //private TalonSRX LeftAugerExtender = new TalonSRX(14);
@@ -55,14 +53,23 @@ namespace HERO_Code_2019 {
             leftActuator = TalonFactory.CreateLinearActuator(CAN_IDs.EXCAVATION.LEFT_ACTUATOR);
             rightActuator = TalonFactory.CreateLinearActuator(CAN_IDs.EXCAVATION.RIGHT_ACTUATOR);
 
+
+            //Init Canifier for controlling stepper motors
+            CANifier = new CTRE.Phoenix.CANifier((ushort)CAN_IDs.ACCESSORIES.CANIFIER);
+
             //Stepper Motors (controlled from one motor controller object)
-            augerExtender = new StepperMotorController(CTRE.HERO.IO.Port3.Pin3, CTRE.HERO.IO.Port3.PWM_Pin9, STEPPER_MAX_SPEED);
+            augerExtender = new StepperMotorController(CANifier, CTRE.Phoenix.CANifier.GeneralPin.SPI_CS, CTRE.HERO.IO.Port3.PWM_Pin9, STEPPER_MAX_SPEED,
+                CTRE.Phoenix.CANifier.GeneralPin.SPI_MOSI_PWM1P, CTRE.Phoenix.CANifier.GeneralPin.SPI_MISO_PWM2P);
+
+
             augerExtender.Stop();
 
             augerRotator = TalonFactory.CreateAugerRotator(CAN_IDs.EXCAVATION.AUGER_ROTATOR);
 
             //Light sensor for detecting full excavation tube
             lightSensor = new LightSensor(CTRE.HERO.IO.Port8.Analog_Pin5);
+
+
         }
 
         //Update calls, run every robot loop
@@ -111,6 +118,10 @@ namespace HERO_Code_2019 {
                     else if (controller.BUTTONS.POV_DOWN) augerExtender.SetSpeed(0.1f);
                     else augerExtender.Stop();
 
+                    if (controller.BUTTONS.X) augerRotator.Set(ControlMode.PercentOutput, 0.3);
+                    else if (controller.BUTTONS.B) augerRotator.Set(ControlMode.PercentOutput, -0.3);
+                    else augerRotator.Set(ControlMode.PercentOutput, 0);
+
                     break;
 
                 //Dynamic States
@@ -154,8 +165,8 @@ namespace HERO_Code_2019 {
             leftActuator.Set(ControlMode.PercentOutput, 0);
             rightActuator.Set(ControlMode.PercentOutput, 0);
             augerExtender.Stop();
+            augerRotator.Set(ControlMode.PercentOutput, 0);
 
-            //AugerRotator.Set(ControlMode.PercentOutput, 0);
             //LeftAugerExtender.Set(ControlMode.PercentOutput, 0);
             //RightAugerExtender.Set(ControlMode.PercentOutput, 0);
 
@@ -195,8 +206,6 @@ namespace HERO_Code_2019 {
 
 
         }
-
-
 
         public ArrayList GetTalonInfo() {
             ArrayList talonInfoList = new ArrayList();

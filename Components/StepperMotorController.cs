@@ -6,8 +6,12 @@ using Microsoft.SPOT.Hardware;
 namespace HERO_Code_2019 {
     class StepperMotorController {
 
-        private OutputPort directionPort;
-        private PWM movePort;
+        private Microsoft.SPOT.Hardware.PWM movePort;
+
+        private CTRE.Phoenix.CANifier CANifier;
+        private CTRE.Phoenix.CANifier.GeneralPin directionPort;
+        private CTRE.Phoenix.CANifier.GeneralPin forwardLimitSwitch;
+        private CTRE.Phoenix.CANifier.GeneralPin reverseLimitSwitch;
 
         public enum Direction {
             FORWARDS = 0,
@@ -18,20 +22,27 @@ namespace HERO_Code_2019 {
         private Direction lastDirection;
         private uint maxSpeed;
 
-        public StepperMotorController(Cpu.Pin directionPin, Microsoft.SPOT.Hardware.Cpu.PWMChannel movePin, uint maxSpeed) {
+
+        public StepperMotorController(CTRE.Phoenix.CANifier CANifier, CTRE.Phoenix.CANifier.GeneralPin directionPin, Microsoft.SPOT.Hardware.Cpu.PWMChannel movePin, uint maxSpeed,
+            CTRE.Phoenix.CANifier.GeneralPin forwardLimitSwitchPin, CTRE.Phoenix.CANifier.GeneralPin reverseLimitSwitchPin) {
+
             lastDirection = Direction.STOPPED;
 
             this.maxSpeed = maxSpeed;
 
-            directionPort = new OutputPort(directionPin, false);
+            this.directionPort = directionPin;
+            this.forwardLimitSwitch = forwardLimitSwitchPin;
+            this.reverseLimitSwitch = reverseLimitSwitchPin;
+            this.CANifier = CANifier;
+
             movePort = new PWM(movePin, maxSpeed, maxSpeed / 2, PWM.ScaleFactor.Microseconds, false);
         }
 
         public void SetSpeed(float percentOutput) {
             if (percentOutput > 1 || percentOutput < -1 || percentOutput == 0) {
-                Stop(); 
+                Stop();
                 return;
-            }     
+            }
 
             Direction direction = (percentOutput > 0) ? Direction.FORWARDS : Direction.BACKWARDS;
 
@@ -45,15 +56,22 @@ namespace HERO_Code_2019 {
         }
 
         public void Stop() {
-            Move(Direction.STOPPED);
+           Move(Direction.STOPPED);
         }
 
         private void Move(Direction direction) {
 
-            if (direction != lastDirection) {
-                //movePort.Stop();
-                Thread.Sleep(250);
-            }
+            if (direction != lastDirection) Thread.Sleep(250);
+
+            //if (direction == Direction.FORWARDS && IsForwardLimitSwitchPressed()) {
+            //    Stop();
+            //    Debug.Print("Forward Limit Switch Tripped");
+            //    return;
+            //} else if (direction == Direction.BACKWARDS && IsReverseLimitSwitchPressed()) {
+            //    Stop();
+            //    Debug.Print("Reverse Limit Switch Tripped");
+            //    return;
+            //}
 
             lastDirection = direction;
 
@@ -62,19 +80,15 @@ namespace HERO_Code_2019 {
                 return;
             }
 
-            directionPort.Write(direction == Direction.FORWARDS);
+            CANifier.SetGeneralOutput(directionPort, direction == Direction.FORWARDS, true);
 
             movePort.Start();
         }
 
-        //public void MoveOneTick() {
-        //    if (direction == Direction.STOPPED) return;
 
-        //    
+        public bool IsForwardLimitSwitchPressed() { return ! CANifier.GetGeneralInput(forwardLimitSwitch); }
+        public bool IsReverseLimitSwitchPressed() { return CANifier.GetGeneralInput(forwardLimitSwitch); }
 
-        //    lastMovement = !lastMovement;
-        //    movePort.Write(lastMovement);
-        //}
 
 
 
