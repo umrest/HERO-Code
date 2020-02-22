@@ -59,7 +59,7 @@ namespace HERO_Code_2019 {
 
             //Stepper Motors (controlled from one motor controller object)
             augerExtender = new StepperMotorController(CANifier, CTRE.Phoenix.CANifier.GeneralPin.SPI_CS, CTRE.HERO.IO.Port3.PWM_Pin9, STEPPER_MAX_SPEED,
-                CTRE.Phoenix.CANifier.GeneralPin.SPI_MOSI_PWM1P, CTRE.Phoenix.CANifier.GeneralPin.SPI_MISO_PWM2P);
+                CTRE.Phoenix.CANifier.GeneralPin.SPI_CLK_PWM0P, CTRE.Phoenix.CANifier.GeneralPin.SPI_MOSI_PWM1P);
 
 
             augerExtender.Stop();
@@ -114,8 +114,8 @@ namespace HERO_Code_2019 {
 
 
                     //Control auger extension stepper motors
-                    if (controller.BUTTONS.POV_UP) augerExtender.SetSpeed(-0.1f);
-                    else if (controller.BUTTONS.POV_DOWN) augerExtender.SetSpeed(0.1f);
+                    if (controller.BUTTONS.POV_UP) augerExtender.SetSpeed(-.5f);
+                    else if (controller.BUTTONS.POV_DOWN) augerExtender.SetSpeed(.2f);
                     else augerExtender.Stop();
 
                     if (controller.BUTTONS.X) augerRotator.Set(ControlMode.PercentOutput, 0.3);
@@ -166,10 +166,6 @@ namespace HERO_Code_2019 {
             rightActuator.Set(ControlMode.PercentOutput, 0);
             augerExtender.Stop();
             augerRotator.Set(ControlMode.PercentOutput, 0);
-
-            //LeftAugerExtender.Set(ControlMode.PercentOutput, 0);
-            //RightAugerExtender.Set(ControlMode.PercentOutput, 0);
-
         }
 
 
