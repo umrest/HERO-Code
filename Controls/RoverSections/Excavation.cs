@@ -10,7 +10,7 @@ namespace HERO_Code_2019 {
 
     class Excavation {
 
-        private const int ACTUATOR_STOWED_POSITION = 270;
+        private const int ACTUATOR_STOWED_POSITION = 270;//270
         private const int ACTUATOR_RAISED_POSITION = 755;
 
 

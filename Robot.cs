@@ -83,7 +83,7 @@ namespace HERO_Code_2019 {
             }
 
 
-            NUC_SerialConnection.WriteDashboardState();
+           
 
             //Serial write to Dashboard with talon motor data
             if (CAN_NETWORK_IS_ENABLED) packageTalonInfo();
@@ -93,6 +93,8 @@ namespace HERO_Code_2019 {
         byte cntr = 0;
         private void packageTalonInfo() {
             if ((cntr++) % 100 != 0) return;
+
+            NUC_SerialConnection.WriteDashboardState();
 
             ArrayList talonInfoList = new ArrayList();
 

@@ -56,22 +56,22 @@ namespace HERO_Code_2019 {
         }
 
         public void Stop() {
-           Move(Direction.STOPPED);
+            Move(Direction.STOPPED);
         }
 
         private void Move(Direction direction) {
-            Debug.Print((!CANifier.GetGeneralInput(forwardLimitSwitch)).ToString() + (!CANifier.GetGeneralInput(reverseLimitSwitch)).ToString());
+            //Debug.Print((!CANifier.GetGeneralInput(forwardLimitSwitch)).ToString() + (!CANifier.GetGeneralInput(reverseLimitSwitch)).ToString());
 
 
             if (direction != lastDirection) Thread.Sleep(250);
 
             if (direction == Direction.FORWARDS && IsForwardLimitSwitchPressed()) {
                 Stop();
-              //  Debug.Print("Forward Limit Switch Tripped");
+                //  Debug.Print("Forward Limit Switch Tripped");
                 return;
             } else if (direction == Direction.BACKWARDS && IsReverseLimitSwitchPressed()) {
                 Stop();
-              //  Debug.Print("Reverse Limit Switch Tripped");
+                //  Debug.Print("Reverse Limit Switch Tripped");
                 return;
             }
 
@@ -88,13 +88,8 @@ namespace HERO_Code_2019 {
         }
 
 
-        public bool IsForwardLimitSwitchPressed() { return ! CANifier.GetGeneralInput(forwardLimitSwitch); }
-        public bool IsReverseLimitSwitchPressed() { return CANifier.GetGeneralInput(reverseLimitSwitch); }
-
-
-
-
-
+        public bool IsForwardLimitSwitchPressed() { return !CANifier.GetGeneralInput(forwardLimitSwitch); }
+        public bool IsReverseLimitSwitchPressed() { return !CANifier.GetGeneralInput(reverseLimitSwitch); }
 
     }
 }

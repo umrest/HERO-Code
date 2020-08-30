@@ -20,8 +20,6 @@ C:\VS_C++\REST\HERO Code 2019\bin\Debug\CTRE.dll
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\ctre_netmf_native.dll
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\CTRE.pdb
 C:\VS_C++\REST\HERO Code 2019\bin\Debug\ctre_netmf_native.pdb
-C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.csprojAssemblyReference.cache
-C:\VS_C++\REST\HERO Code 2019\obj\Debug\TinyCLR_DebugReferences.cache
 C:\VS_C++\REST\HERO Code 2019\obj\Debug\be\HERO Code 2019.pe
 C:\VS_C++\REST\HERO Code 2019\obj\Debug\be\HERO Code 2019.pdbx
 C:\VS_C++\REST\HERO Code 2019\obj\Debug\le\HERO Code 2019.pe
@@ -29,3 +27,4 @@ C:\VS_C++\REST\HERO Code 2019\obj\Debug\le\HERO Code 2019.pdbx
 C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.csproj.CopyComplete
 C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.exe
 C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.pdb
+C:\VS_C++\REST\HERO Code 2019\obj\Debug\HERO Code 2019.csproj.CoreCompileInputs.cache
