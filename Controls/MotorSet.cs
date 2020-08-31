@@ -2,7 +2,7 @@ using System;
 using Microsoft.SPOT;
 using System.Collections;
 
-namespace HERO_Code_2019 {
+namespace HERO_Code {
     class MotorSet {
 
         public class TalonInfo {

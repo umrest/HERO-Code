@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>HERO Code 2019</AssemblyName>
+    <AssemblyName>HERO Code</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>HERO_Code_2019</RootNamespace>
+    <RootNamespace>HERO_Code</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -36,6 +36,7 @@
     <Compile Include="Communication\Decoders\VisionDecoder.cs" />
     <Compile Include="Communication\SerialCommsHandler.cs" />
     <Compile Include="Components\LightSensor.cs" />
+    <Compile Include="Components\LimitSwitch.cs" />
     <Compile Include="Components\StepperMotorController.cs" />
     <Compile Include="Controls\CAN_IDs.cs" />
     <Compile Include="Controls\ControlMode\ControlAlgorithms.cs" />

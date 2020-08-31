@@ -3,7 +3,7 @@ using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 
-namespace HERO_Code_2019 {
+namespace HERO_Code {
     class StepperMotorController {
 
         private Microsoft.SPOT.Hardware.PWM movePort;

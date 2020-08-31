@@ -6,7 +6,7 @@ using CTRE.Phoenix.Controller;
 using CTRE.Phoenix.MotorControl;
 using CTRE.Phoenix.MotorControl.CAN;
 
-namespace HERO_Code_2019 {
+namespace HERO_Code {
     public class RobotMain {
 
         //Robot startup

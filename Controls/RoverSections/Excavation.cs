@@ -6,7 +6,7 @@ using CTRE.Phoenix.MotorControl.CAN;
 using System.Collections;
 
 
-namespace HERO_Code_2019 {
+namespace HERO_Code {
 
     class Excavation {
 
@@ -20,15 +20,13 @@ namespace HERO_Code_2019 {
         private const int STEPPER_MAX_SPEED = 250;
         private StepperMotorController augerExtender;
 
+        private LimitSwitch forwardLimitSwitch;
+        private LimitSwitch reverseLimitSwitch;
+
         private TalonSRX augerRotator;
         private LightSensor lightSensor;
 
         private CTRE.Phoenix.CANifier CANifier;
-
-        //private TalonSRX AugerRotator = new TalonSRX(13);
-        //private TalonSRX LeftAugerExtender = new TalonSRX(14);
-        //private TalonSRX RightAugerExtender = new TalonSRX(15);
-
 
 
         //Definitions for Excavation State Machine
@@ -56,6 +54,10 @@ namespace HERO_Code_2019 {
 
             //Init Canifier for controlling stepper motors
             CANifier = new CTRE.Phoenix.CANifier((ushort)CAN_IDs.ACCESSORIES.CANIFIER);
+
+            //Initialize the forward and reverse limit switches for extending/retracting the auger
+            forwardLimitSwitch = new LimitSwitch(CANifier, CTRE.Phoenix.CANifier.GeneralPin.SPI_CLK_PWM0P);
+            reverseLimitSwitch = new LimitSwitch(CANifier, CTRE.Phoenix.CANifier.GeneralPin.SPI_MOSI_PWM1P);
 
             //Stepper Motors (controlled from one motor controller object)
             augerExtender = new StepperMotorController(CANifier, CTRE.Phoenix.CANifier.GeneralPin.SPI_CS, CTRE.HERO.IO.Port3.PWM_Pin9, STEPPER_MAX_SPEED,
@@ -90,9 +92,10 @@ namespace HERO_Code_2019 {
             switch (excavationState) {
 
                 //Initial State
-                case ExcavationState.INIT:
+                case ExcavationState.INIT:                    
+
                     if (controller.BUTTONS.Y) excavationState = ExcavationState.RAISING;
-                    if (controller.BUTTONS.A) excavationState = ExcavationState.STOWING;
+                    if (controller.BUTTONS.A && reverseLimitSwitch.IsPressed()) excavationState = ExcavationState.STOWING;
 
                     StopAll();
                     break;
@@ -110,7 +113,7 @@ namespace HERO_Code_2019 {
                     rightActuator.Set(ControlMode.PercentOutput, 0);
 
 
-                    if (controller.BUTTONS.A) excavationState = ExcavationState.STOWING;
+                    if (controller.BUTTONS.A && reverseLimitSwitch.IsPressed()) excavationState = ExcavationState.STOWING;
 
 
                     //Control auger extension stepper motors

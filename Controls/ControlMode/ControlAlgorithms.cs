@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace HERO_Code_2019.Controls {
+namespace HERO_Code.Controls {
     class ControlAlgorithms {
         public static float P_Loop(float pos, float unitPos, float desiredPos = 0) {
             float P = 1.0f / (unitPos - desiredPos);

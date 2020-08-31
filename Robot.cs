@@ -7,7 +7,7 @@ using CTRE.Phoenix.MotorControl;
 using CTRE.Phoenix.MotorControl.CAN;
 using CTRE.Phoenix.Sensors;
 
-namespace HERO_Code_2019 {
+namespace HERO_Code {
     class Robot {
 
         public const bool CAN_NETWORK_IS_ENABLED = true;
@@ -77,7 +77,7 @@ namespace HERO_Code_2019 {
                 //MoveMotors
                 if (CAN_NETWORK_IS_ENABLED) {
                     // Debug.Print("Fix BackRight shaft key DB");
-                    // driveBase.Update(ref logitechController, controlModeHandler.IsRobotActive());
+                    driveBase.Update(ref logitechController, controlModeHandler.IsRobotActive());
                     excavation.Update(ref logitechController, controlModeHandler.IsRobotActive());
                 }
             }
@@ -86,12 +86,12 @@ namespace HERO_Code_2019 {
            
 
             //Serial write to Dashboard with talon motor data
-            if (CAN_NETWORK_IS_ENABLED) packageTalonInfo();
+            if (CAN_NETWORK_IS_ENABLED) PackageTalonInfo();
 
         }
 
         byte cntr = 0;
-        private void packageTalonInfo() {
+        private void PackageTalonInfo() {
             if ((cntr++) % 100 != 0) return;
 
             NUC_SerialConnection.WriteDashboardState();

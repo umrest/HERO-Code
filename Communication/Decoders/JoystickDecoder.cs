@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Microsoft.SPOT;
 
-namespace HERO_Code_2019 {
+namespace HERO_Code {
 
     class JoystickDecoder {
 

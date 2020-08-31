@@ -4,7 +4,7 @@ using System.Collections;
 
 
 
-namespace HERO_Code_2019 {
+namespace HERO_Code {
     class SerialCommsHandler {
 
         //Serial connection

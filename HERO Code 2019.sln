@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HERO Code 2019", "HERO Code 2019.csproj", "{B231A040-57F6-4A99-8984-E3159EA01EF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HERO Code", "HERO Code.csproj", "{B231A040-57F6-4A99-8984-E3159EA01EF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayModule Test", "..\DisplayModule Test\DisplayModule Test.csproj", "{E83A203C-EF0C-4B76-9BA8-AA238F7A51AE}"
 EndProject

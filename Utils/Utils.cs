@@ -1,7 +1,7 @@
 using Microsoft.SPOT;
 
 
-namespace HERO_Code_2019 {
+namespace HERO_Code {
     class Utils {
         public static void Delay(int delay) {
             //Delay in milliseconds
