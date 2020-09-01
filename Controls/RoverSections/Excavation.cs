@@ -21,7 +21,9 @@ namespace HERO_Code {
         private StepperMotorController augerExtender;
 
         private LimitSwitch forwardLimitSwitch;
+        int forwardLimitSwitchCntr = 0;
         private LimitSwitch reverseLimitSwitch;
+        int reverseLimitSwitchCntr = 0;
 
         private TalonSRX augerRotator;
         private LightSensor lightSensor;
@@ -80,6 +82,7 @@ namespace HERO_Code {
                 return;
             }
 
+            LimitSwitchDebounce();
 
             UpdateStateMachine(ref controller);
 
@@ -87,13 +90,15 @@ namespace HERO_Code {
         }
 
         private void UpdateStateMachine(ref Controller controller) {
+            
+
             switch (excavationState) {
 
                 //Initial State
                 case ExcavationState.INIT:
 
                     if (controller.BUTTONS.Y) excavationState = ExcavationState.RAISING;
-                    if (controller.BUTTONS.A && reverseLimitSwitch.IsPressed()) excavationState = ExcavationState.STOWING;
+                    if (controller.BUTTONS.A && reverseLimitSwitchCntr > 3) excavationState = ExcavationState.STOWING;
 
                     StopAll();
                     break;
@@ -111,7 +116,7 @@ namespace HERO_Code {
                     rightActuator.Set(ControlMode.PercentOutput, 0);
 
 
-                    if (controller.BUTTONS.A && reverseLimitSwitch.IsPressed()) excavationState = ExcavationState.STOWING;
+                    if (controller.BUTTONS.A && reverseLimitSwitchCntr > 3) excavationState = ExcavationState.STOWING;
                     Debug.Print(reverseLimitSwitch.IsPressed().ToString());
 
                     //Control auger extension stepper motors
@@ -154,7 +159,16 @@ namespace HERO_Code {
             }
         }
 
+        private void LimitSwitchDebounce() {
+            if (forwardLimitSwitch.IsPressed()) forwardLimitSwitchCntr++;
+            else forwardLimitSwitchCntr = 0;
 
+            if (reverseLimitSwitch.IsPressed()) reverseLimitSwitchCntr++;
+            else reverseLimitSwitchCntr = 0;
+
+            if (forwardLimitSwitchCntr > 1000) forwardLimitSwitchCntr = 100;
+            if (reverseLimitSwitchCntr > 1000) reverseLimitSwitchCntr = 100;
+        }
 
 
 
