@@ -62,8 +62,6 @@ namespace HERO_Code {
             //Stepper Motors (controlled from one motor controller object)
             augerExtender = new StepperMotorController(CANifier, CTRE.Phoenix.CANifier.GeneralPin.SPI_CS, CTRE.HERO.IO.Port3.PWM_Pin9, STEPPER_MAX_SPEED,
                 CTRE.Phoenix.CANifier.GeneralPin.SPI_CLK_PWM0P, CTRE.Phoenix.CANifier.GeneralPin.SPI_MOSI_PWM1P);
-
-
             augerExtender.Stop();
 
             augerRotator = TalonFactory.CreateAugerRotator(CAN_IDs.EXCAVATION.AUGER_ROTATOR);
@@ -92,7 +90,7 @@ namespace HERO_Code {
             switch (excavationState) {
 
                 //Initial State
-                case ExcavationState.INIT:                    
+                case ExcavationState.INIT:
 
                     if (controller.BUTTONS.Y) excavationState = ExcavationState.RAISING;
                     if (controller.BUTTONS.A && reverseLimitSwitch.IsPressed()) excavationState = ExcavationState.STOWING;
@@ -114,7 +112,7 @@ namespace HERO_Code {
 
 
                     if (controller.BUTTONS.A && reverseLimitSwitch.IsPressed()) excavationState = ExcavationState.STOWING;
-
+                    Debug.Print(reverseLimitSwitch.IsPressed().ToString());
 
                     //Control auger extension stepper motors
                     if (controller.BUTTONS.POV_UP) augerExtender.SetSpeed(-.5f);
@@ -218,8 +216,8 @@ namespace HERO_Code {
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
             info.encoderPosition = (short)t.GetSelectedSensorPosition();
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
-
             talonInfoList.Add(new TalonInfo(info));
+
 
             t = rightActuator;
             info.CAN_ID = (short)t.GetDeviceID();
@@ -228,6 +226,26 @@ namespace HERO_Code {
             info.encoderPosition = (short)t.GetSelectedSensorPosition();
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
             talonInfoList.Add(new TalonInfo(info));
+
+
+            t = augerRotator;
+            info.CAN_ID = (short)t.GetDeviceID();
+            info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
+            info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
+            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
+            talonInfoList.Add(new TalonInfo(info));
+
+            info.CAN_ID = (short)CAN_IDs.EXCAVATION.AUGER_EXTENDER;
+            info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * augerExtender.GetDirectionAsVBUS()));
+            info.currentDraw = -1;
+            int encoderPos = 0;
+            if (reverseLimitSwitch.IsPressed()) encoderPos = -1;
+            else if (forwardLimitSwitch.IsPressed()) encoderPos = 1;
+            info.encoderPosition = encoderPos;
+            info.encoderVelocity = info.percentOutput;
+            talonInfoList.Add(new TalonInfo(info));
+                
 
             return talonInfoList;
         }

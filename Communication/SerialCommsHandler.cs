@@ -36,7 +36,7 @@ namespace HERO_Code {
                 9,      // Dashboard_READ 9
 
                 //Write
-                120,    // Motor Info OUT
+                TalonInfo.NUM_BYTES * 10,    // Motor Info OUT
                 1,      //Dashboard State OUT
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           
@@ -221,7 +221,6 @@ namespace HERO_Code {
 
             int idx = 0;
             foreach (Object o in talonInfoList) {
-
 
                 TalonInfo talonInfo = (TalonInfo)o;
 

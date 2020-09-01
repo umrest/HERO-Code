@@ -87,6 +87,13 @@ namespace HERO_Code {
             movePort.Start();
         }
 
+        public Direction GetDirection() { return lastDirection; }
+        public double GetDirectionAsVBUS() {
+            double vbus = 0;
+            if (lastDirection == Direction.BACKWARDS) vbus = -1;
+            else if (lastDirection == Direction.FORWARDS) vbus = 1;
+            return vbus;
+        }
 
         public bool IsForwardLimitSwitchPressed() { return !CANifier.GetGeneralInput(forwardLimitSwitch); }
         public bool IsReverseLimitSwitchPressed() { return !CANifier.GetGeneralInput(reverseLimitSwitch); }

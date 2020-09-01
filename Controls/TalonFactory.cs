@@ -16,6 +16,7 @@ namespace HERO_Code {
             talon.ConfigPeakCurrentLimit(2 * MAX_CURRENT);
             talon.ConfigPeakCurrentDuration(0);
             talon.SetInverted(inverted);
+            talon.SetNeutralMode(NeutralMode.Brake);
             return talon;
         }
 
@@ -40,6 +41,7 @@ namespace HERO_Code {
 
         public static TalonSRX CreateAugerRotator(int CAN_ID) {
             TalonSRX talon = new TalonSRX(CAN_ID);
+            talon.SetNeutralMode(NeutralMode.Brake);
 
 
 

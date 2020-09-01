@@ -16,6 +16,7 @@ namespace HERO_Code {
             public static int RIGHT_ACTUATOR = 12;
 
             public static int AUGER_ROTATOR = 13;
+            public static int AUGER_EXTENDER = 14;
         }
 
         public static class COLLECTION {
