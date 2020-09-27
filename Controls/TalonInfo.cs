@@ -42,6 +42,10 @@ namespace HERO_Code {
 
         public const int NUM_BYTES = 16;
 
+        public static short ConvertEncoderPositionToShort(long encoderPos) {
+           short s =  (short)(encoderPos / 150);
+           return s;
+        }
 
         public static short ConvertCurrentToShort(float currentDraw) {
             return (short)(currentDraw * 100);

@@ -80,7 +80,7 @@ namespace HERO_Code {
             info.CAN_ID = (short) t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
-            info.encoderPosition = (short) t.GetSelectedSensorPosition();
+            info.encoderPosition = TalonInfo.ConvertEncoderPositionToShort(t.GetSelectedSensorPosition());
             info.encoderVelocity = (short) t.GetSelectedSensorVelocity();
             
             talonInfoList.Add(new TalonInfo(info));
@@ -89,7 +89,7 @@ namespace HERO_Code {
             info.CAN_ID = (short)t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
-            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderPosition = TalonInfo.ConvertEncoderPositionToShort(t.GetSelectedSensorPosition());
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
             talonInfoList.Add(new TalonInfo(info));
 
@@ -97,7 +97,7 @@ namespace HERO_Code {
             info.CAN_ID = (short)t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
-            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderPosition = TalonInfo.ConvertEncoderPositionToShort(t.GetSelectedSensorPosition());
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
             talonInfoList.Add(new TalonInfo(info));
 
@@ -105,7 +105,7 @@ namespace HERO_Code {
             info.CAN_ID = (short)t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
-            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderPosition = TalonInfo.ConvertEncoderPositionToShort(t.GetSelectedSensorPosition());
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
             talonInfoList.Add(new TalonInfo(info));
 
