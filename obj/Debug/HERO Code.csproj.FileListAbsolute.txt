@@ -30,3 +30,37 @@ C:\VS_C++\REST\HERO Code\obj\Debug\le\HERO Code.pdbx
 C:\VS_C++\REST\HERO Code\obj\Debug\HERO Code.csproj.CopyComplete
 C:\VS_C++\REST\HERO Code\obj\Debug\HERO Code.exe
 C:\VS_C++\REST\HERO Code\obj\Debug\HERO Code.pdb
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\le\HERO Code.exe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\be\HERO Code.exe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\le\HERO Code.pdb
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\be\HERO Code.pdb
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\HERO Code.exe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\HERO Code.pdb
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\le\HERO Code.pe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\le\HERO Code.pdbx
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\be\HERO Code.pe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\be\HERO Code.pdbx
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\LE\CTRE.pe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\LE\ctre_netmf_native.pe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\LE\CTRE.Phoenix.LowLevel.pe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\BE\CTRE.pe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\BE\ctre_netmf_native.pe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\BE\CTRE.Phoenix.LowLevel.pe
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\LE\CTRE.pdbx
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\LE\ctre_netmf_native.pdbx
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\LE\CTRE.Phoenix.LowLevel.pdbx
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\BE\CTRE.pdbx
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\BE\ctre_netmf_native.pdbx
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\BE\CTRE.Phoenix.LowLevel.pdbx
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\CTRE.dll
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\ctre_netmf_native.dll
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\CTRE.Phoenix.LowLevel.dll
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\CTRE.pdb
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\ctre_netmf_native.pdb
+C:\Users\samue\Source\Repos\HERO-Code\bin\Debug\CTRE.Phoenix.LowLevel.pdb
+C:\Users\samue\Source\Repos\HERO-Code\obj\Debug\HERO Code.csprojAssemblyReference.cache
+C:\Users\samue\Source\Repos\HERO-Code\obj\Debug\TinyCLR_DebugReferences.cache
+C:\Users\samue\Source\Repos\HERO-Code\obj\Debug\HERO Code.csproj.CoreCompileInputs.cache
+C:\Users\samue\Source\Repos\HERO-Code\obj\Debug\HERO Code.csproj.CopyComplete
+C:\Users\samue\Source\Repos\HERO-Code\obj\Debug\HERO Code.exe
+C:\Users\samue\Source\Repos\HERO-Code\obj\Debug\HERO Code.pdb
