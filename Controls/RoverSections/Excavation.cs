@@ -91,7 +91,6 @@ namespace HERO_Code {
 
         private void UpdateStateMachine(ref Controller controller) {
             
-
             switch (excavationState) {
 
                 //Initial State
@@ -228,7 +227,7 @@ namespace HERO_Code {
             info.CAN_ID = (short)t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
-            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderPosition = TalonInfo.ConvertEncoderPositionToShort(t.GetSelectedSensorPosition());
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
             talonInfoList.Add(new TalonInfo(info));
 
@@ -237,7 +236,7 @@ namespace HERO_Code {
             info.CAN_ID = (short)t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
-            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderPosition = TalonInfo.ConvertEncoderPositionToShort(t.GetSelectedSensorPosition());
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
             talonInfoList.Add(new TalonInfo(info));
 
@@ -246,7 +245,7 @@ namespace HERO_Code {
             info.CAN_ID = (short)t.GetDeviceID();
             info.percentOutput = TalonInfo.ConvertPercentOutputToByte((int)(100 * t.GetMotorOutputPercent()));
             info.currentDraw = TalonInfo.ConvertCurrentToShort(t.GetOutputCurrent());
-            info.encoderPosition = (short)t.GetSelectedSensorPosition();
+            info.encoderPosition = TalonInfo.ConvertEncoderPositionToShort(t.GetSelectedSensorPosition());
             info.encoderVelocity = (short)t.GetSelectedSensorVelocity();
             talonInfoList.Add(new TalonInfo(info));
 
@@ -256,7 +255,7 @@ namespace HERO_Code {
             int encoderPos = 0;
             if (reverseLimitSwitch.IsPressed()) encoderPos = -1;
             else if (forwardLimitSwitch.IsPressed()) encoderPos = 1;
-            info.encoderPosition = encoderPos;
+            info.encoderPosition = encoderPos * 100;
             info.encoderVelocity = info.percentOutput;
             talonInfoList.Add(new TalonInfo(info));
                 

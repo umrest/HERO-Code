@@ -5,12 +5,6 @@ VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HERO Code", "HERO Code.csproj", "{B231A040-57F6-4A99-8984-E3159EA01EF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayModule Test", "..\DisplayModule Test\DisplayModule Test.csproj", "{E83A203C-EF0C-4B76-9BA8-AA238F7A51AE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PigeonTest", "..\PigeonTest\PigeonTest.csproj", "{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPIO Test", "..\GPIO Test\GPIO Test.csproj", "{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,24 +17,6 @@ Global
 		{B231A040-57F6-4A99-8984-E3159EA01EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B231A040-57F6-4A99-8984-E3159EA01EF7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B231A040-57F6-4A99-8984-E3159EA01EF7}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{E83A203C-EF0C-4B76-9BA8-AA238F7A51AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E83A203C-EF0C-4B76-9BA8-AA238F7A51AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E83A203C-EF0C-4B76-9BA8-AA238F7A51AE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{E83A203C-EF0C-4B76-9BA8-AA238F7A51AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E83A203C-EF0C-4B76-9BA8-AA238F7A51AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E83A203C-EF0C-4B76-9BA8-AA238F7A51AE}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3E5F9EA-71DB-4BA4-88BF-3AB4C6669AF1}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{537C61A7-83B1-4D6B-9EB7-6B0437CA5F86}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
